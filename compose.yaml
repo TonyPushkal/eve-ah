@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file: .env
+    environment:
+      EVE_DATA_DIR: /app/data
+      EVE_STORAGE_DIR: /app/storage
+      EVE_BOT_CONFIG: /app/bot.yaml
+    volumes:
+      - ./data:/app/data:ro
+      - ./bot.yaml:/app/bot.yaml:ro
+      - index:/app/storage
+      - models:/app/model-cache
+volumes:
+  index:
+  models:

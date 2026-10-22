@@ -1,0 +1,17 @@
+[
+  {"question":"How many days do I have to return unused items?","sources":["returns.md"]},
+  {"question":"Who pays return shipping?","sources":["returns.md"]},
+  {"question":"What should I do if an item arrives damaged?","sources":["returns.md"]},
+  {"question":"How long does a refund take after inspection?","sources":["returns.md"]},
+  {"question":"Can I return a personalized item?","sources":["returns.md"]},
+  {"question":"How long does standard delivery take?","sources":["shipping.md"]},
+  {"question":"When is domestic shipping free?","sources":["shipping.md"]},
+  {"question":"How much is shipping for a 40 dollar order?","sources":["shipping.md"]},
+  {"question":"Is express delivery available?","sources":["shipping.md"]},
+  {"question":"When are orders dispatched?","sources":["shipping.md"]},
+  {"question":"What is the distance between Earth and Mars?","sources":[]},
+  {"question":"Explain binary search complexity.","sources":[]},
+  {"question":"Who won the 1986 football World Cup?","sources":[]},
+  {"question":"How do I bake sourdough bread?","sources":[]},
+  {"question":"What is photosynthesis?","sources":[]}
+]

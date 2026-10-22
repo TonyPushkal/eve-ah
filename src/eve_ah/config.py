@@ -44,7 +44,10 @@ class Settings(BaseModel):
     bot: BotConfig = Field(default_factory=BotConfig)
 
     def require_key(self):
-        if not self.api_key.get_secret_value() or self.api_key.get_secret_value() == "replace-with-your-api-key":
+        if (
+            not self.api_key.get_secret_value()
+            or self.api_key.get_secret_value() == "replace-with-your-api-key"
+        ):
             raise ValueError("Set EVE_API_KEY in .env before starting the chat server.")
 
 
@@ -60,7 +63,7 @@ def load_settings(root: Path | None = None) -> Settings:
         fields["model"] = "gpt-4.1-mini"
     for name in ("data_dir", "storage_dir"):
         path = Path(fields.get(name, "data" if name == "data_dir" else "storage"))
-        fields[name] = (root / path).resolve()
+        fields[name] = (root / path).absolute()
     config_path = root / values.get("EVE_BOT_CONFIG", "bot.yaml")
     if config_path.exists():
         if config_path.stat().st_size > 65536:

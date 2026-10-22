@@ -1,0 +1,10 @@
+[
+ {"question":"What does a database index help with?","sources":["notes.md"]},
+ {"question":"What is transaction atomicity?","sources":["notes.md"]},
+ {"question":"What does a foreign key enforce?","sources":["notes.md"]},
+ {"question":"What rows does a left join preserve?","sources":["notes.md"]},
+ {"question":"What does database durability mean?","sources":["notes.md"]},
+ {"question":"How long should I boil potatoes?","sources":[]},
+ {"question":"When is the next solar eclipse?","sources":[]},
+ {"question":"What is the store return policy?","sources":[]}
+]

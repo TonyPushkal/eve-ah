@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ask questions of your documents and inspect the evidence behind every answer.">
+  <title>eve-ah — Your knowledge, in conversation</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#question">Skip to question</a>
+  <div class="workspace">
+    <aside class="sidebar" aria-label="Workspace">
+      <a class="brand" href="/" aria-label="eve-ah home"><span class="brand-mark" aria-hidden="true">e.</span><span data-bot-name>eve-ah</span></a>
+      <div class="sidebar-body">
+        <p class="eyebrow">YOUR WORKSPACE</p>
+        <div class="workspace-item"><span class="document-icon" aria-hidden="true">▤</span><span>Document chat</span><span class="active-dot" aria-hidden="true"></span></div>
+        <button id="clear-chat" class="new-chat" type="button"><span aria-hidden="true">+</span> New conversation</button>
+        <div class="sidebar-note"><span class="note-line" aria-hidden="true"></span><p>Your documents.<br>Your questions.<br>A little more clarity.</p></div>
+      </div>
+      <div class="sidebar-footer"><span class="local-indicator" aria-hidden="true"></span><span>Self-hosted workspace</span><span class="version">v0.1</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="breadcrumb-divider" aria-hidden="true">/</span><span>Document chat</span></div><span id="mode-label" class="mode-pill">Knowledge mode</span></header>
+      <div class="conversation-layout">
+        <section class="chat-column" aria-label="Conversation">
+          <div id="setup-notice" class="notice" role="status" hidden></div>
+          <div id="welcome" class="welcome">
+            <div class="welcome-kicker"><span class="sunburst" aria-hidden="true">✳</span><span>A CONVERSATION WITH YOUR KNOWLEDGE</span></div>
+            <h1>Ask a question.<br><em>Find the source.</em></h1>
+            <p id="welcome-copy" class="welcome-copy">Bring your curiosity. Your documents hold the answers. <br>Explore them with an assistant that shows its work.</p>
+            <div class="principles"><div><span class="principle-number">01</span><span>Ask in your own words</span></div><div><span class="principle-number">02</span><span>Follow the evidence</span></div><div><span class="principle-number">03</span><span>Keep the conversation going</span></div></div>
+          </div>
+          <div id="messages" class="messages" aria-live="polite" aria-relevant="additions" role="log" aria-label="Chat messages"></div>
+          <div class="composer-area">
+            <form id="chat-form" class="composer">
+              <label class="sr-only" for="question">Ask a question about your documents</label>
+              <textarea id="question" rows="2" maxlength="4000" placeholder="What would you like to know?" autocomplete="off" required></textarea>
+              <div class="composer-bottom"><span id="composer-hint">Enter to send <span aria-hidden="true">·</span> Shift + Enter for a new line</span><button id="send" type="submit" aria-label="Send question" disabled><span aria-hidden="true">↑</span></button></div>
+            </form>
+            <p class="privacy-note">Your question and relevant document excerpts are sent to your selected model provider. <span>Always check important answers.</span></p>
+          </div>
+        </section>
+        <aside class="evidence-panel" aria-labelledby="evidence-title">
+          <div class="panel-heading"><h2 id="evidence-title">Behind the answer</h2><span class="tiny-icon" aria-hidden="true">↗</span></div>
+          <p class="panel-description">The evidence, close at hand.</p>
+          <div id="source-empty" class="source-empty"><span class="source-illustration" aria-hidden="true">[ ]</span><h3>Follow the thread.</h3><p>Source passages appear here after an answer. Open one to see the original context.</p></div>
+          <div id="sources" class="sources"></div>
+          <div class="session-details"><p class="eyebrow">THIS SESSION</p><dl><div><dt>Provider</dt><dd id="provider-label">Connecting…</dd></div><div><dt>Knowledge</dt><dd id="readiness-label">Checking…</dd></div><div><dt>History</dt><dd>This tab only</dd></div></dl></div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
