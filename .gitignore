@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+bot.yaml
+data/
+storage/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+.DS_Store
+*.log
+playwright-report/
+test-results/

@@ -1,0 +1,10 @@
+name: eve-ah
+welcome: Ask a question. Find the source.
+instructions: Answer clearly and concisely. Explain conflicting source material when present.
+mode: knowledge
+# This is a cosine similarity cutoff, not a confidence probability.
+min_score: 0.3
+top_k: 4
+chunk_tokens: 200
+chunk_overlap: 32
+context_chars: 12000
