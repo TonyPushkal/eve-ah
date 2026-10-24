@@ -9,6 +9,10 @@ root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 export EVE_DATA_DIR="$root/examples/$1/data"
 export EVE_STORAGE_DIR="$root/storage/$1"
 export EVE_BOT_CONFIG="$root/examples/$1/bot.yaml"
+# Include Python user-installed commands in minimal remote shells.
+if ! command -v eve-ah >/dev/null 2>&1; then
+  export PATH="$(python -m site --user-base)/bin:$PATH"
+fi
 # Credentials/provider selection come from the root .env or process environment.
 eve-ah --root "$root" check
 eve-ah --root "$root" ingest
