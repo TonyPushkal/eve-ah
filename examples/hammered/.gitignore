@@ -1,0 +1,4 @@
+# These synthetic source files and public preset settings are intentional.
+!data/
+!data/**
+!bot.yaml

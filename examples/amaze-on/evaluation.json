@@ -1,0 +1,132 @@
+[
+  {
+    "question": "What is Amaze-on?",
+    "sources": [
+      "about.md"
+    ]
+  },
+  {
+    "question": "How much does CloudCup cost and how much does it hold?",
+    "sources": [
+      "products.md"
+    ]
+  },
+  {
+    "question": "Can I put CloudCup in the dishwasher?",
+    "sources": [
+      "products.md"
+    ]
+  },
+  {
+    "question": "Does GlowDesk run on a battery?",
+    "sources": [
+      "products.md"
+    ]
+  },
+  {
+    "question": "Is TrailPack waterproof?",
+    "sources": [
+      "products.md"
+    ]
+  },
+  {
+    "question": "What laptop size fits TrailPack?",
+    "sources": [
+      "products.md"
+    ]
+  },
+  {
+    "question": "How many letters can I engrave on NameTag?",
+    "sources": [
+      "products.md"
+    ]
+  },
+  {
+    "question": "What is standard shipping for a $40 subtotal?",
+    "sources": [
+      "shipping.md"
+    ]
+  },
+  {
+    "question": "Is standard shipping free at exactly $50?",
+    "sources": [
+      "shipping.md"
+    ]
+  },
+  {
+    "question": "Is express shipping free on a $65 order?",
+    "sources": [
+      "shipping.md"
+    ]
+  },
+  {
+    "question": "How long does standard delivery take after dispatch?",
+    "sources": [
+      "shipping.md"
+    ]
+  },
+  {
+    "question": "Does express shipping speed up NameTag engraving?",
+    "sources": [
+      "shipping.md",
+      "products.md"
+    ]
+  },
+  {
+    "question": "Can I return an opened but unused product?",
+    "sources": [
+      "returns.md"
+    ]
+  },
+  {
+    "question": "Who pays return postage if I change my mind?",
+    "sources": [
+      "returns.md"
+    ]
+  },
+  {
+    "question": "My replacement arrived damaged. What is the policy?",
+    "sources": [
+      "returns.md"
+    ]
+  },
+  {
+    "question": "Can I return a NameTag because I no longer want it?",
+    "sources": [
+      "returns.md"
+    ]
+  },
+  {
+    "question": "When is an approved refund issued?",
+    "sources": [
+      "returns.md"
+    ]
+  },
+  {
+    "question": "My GlowDesk stopped working after eight months of normal use. Is it covered?",
+    "sources": [
+      "warranty.md"
+    ]
+  },
+  {
+    "question": "Does the GlowDesk warranty cover spilled water?",
+    "sources": [
+      "warranty.md"
+    ]
+  },
+  {
+    "question": "Can a manufacturing defect still be covered after the 30-day return window?",
+    "sources": [
+      "warranty.md",
+      "returns.md"
+    ]
+  },
+  {
+    "question": "Who won the 1986 football World Cup?",
+    "sources": []
+  },
+  {
+    "question": "How do I bake sourdough bread?",
+    "sources": []
+  }
+]

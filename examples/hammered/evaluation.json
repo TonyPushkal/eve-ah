@@ -1,0 +1,134 @@
+[
+  {
+    "question": "What is Hammered University?",
+    "sources": [
+      "about.md"
+    ]
+  },
+  {
+    "question": "What does the Product Foundations Certificate require?",
+    "sources": [
+      "enrollment.md"
+    ]
+  },
+  {
+    "question": "Does PF101 have prerequisites?",
+    "sources": [
+      "courses.md"
+    ]
+  },
+  {
+    "question": "Do I need coding experience for DA110?",
+    "sources": [
+      "courses.md"
+    ]
+  },
+  {
+    "question": "When does UX120 meet?",
+    "sources": [
+      "courses.md"
+    ]
+  },
+  {
+    "question": "What are the PL201 prerequisites?",
+    "sources": [
+      "courses.md",
+      "enrollment.md"
+    ]
+  },
+  {
+    "question": "Can I take PF101, DA110, and PL201 together?",
+    "sources": [
+      "enrollment.md",
+      "courses.md"
+    ]
+  },
+  {
+    "question": "How many courses can I take per term?",
+    "sources": [
+      "enrollment.md",
+      "courses.md"
+    ]
+  },
+  {
+    "question": "Do part-time students have different deadlines?",
+    "sources": [
+      "enrollment.md"
+    ]
+  },
+  {
+    "question": "When does Spring 2027 enrollment close?",
+    "sources": [
+      "enrollment.md",
+      "calendar-fees.md"
+    ]
+  },
+  {
+    "question": "When do Spring 2027 classes start?",
+    "sources": [
+      "calendar-fees.md"
+    ]
+  },
+  {
+    "question": "What happens if I drop before the add/drop deadline?",
+    "sources": [
+      "calendar-fees.md"
+    ]
+  },
+  {
+    "question": "What happens if I withdraw on 10 February 2027?",
+    "sources": [
+      "calendar-fees.md"
+    ]
+  },
+  {
+    "question": "How much is the full certificate tuition?",
+    "sources": [
+      "calendar-fees.md"
+    ]
+  },
+  {
+    "question": "When must Spring tuition be paid?",
+    "sources": [
+      "calendar-fees.md"
+    ]
+  },
+  {
+    "question": "How long do I have to accept a wait-list seat offer?",
+    "sources": [
+      "enrollment.md"
+    ]
+  },
+  {
+    "question": "How long are class recordings available?",
+    "sources": [
+      "courses.md"
+    ]
+  },
+  {
+    "question": "What grade is a final score of 69.9?",
+    "sources": [
+      "grading.md"
+    ]
+  },
+  {
+    "question": "Coursework 80, project 70, final 90: what is my overall grade?",
+    "sources": [
+      "grading.md"
+    ]
+  },
+  {
+    "question": "How many times may I retake a course?",
+    "sources": [
+      "grading.md"
+    ]
+  },
+  {
+    "question": "What is the store return policy?",
+    "sources": []
+  },
+  {
+    "question": "How long should I boil potatoes?",
+    "sources": []
+  }
+]
