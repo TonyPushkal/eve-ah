@@ -1,0 +1,37 @@
+{
+  "name": "eve-ah demos",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "forwardPorts": [
+    8000,
+    8001
+  ],
+  "portsAttributes": {
+    "8000": {
+      "label": "Amaze-on",
+      "onAutoForward": "notify"
+    },
+    "8001": {
+      "label": "Hammered University",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "docs/codespaces.md"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  },
+  "build": {
+    "dockerfile": "Dockerfile"
+  }
+}
