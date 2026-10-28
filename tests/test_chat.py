@@ -27,9 +27,13 @@ class Generator:
     def __init__(self, text):
         self.text = text
         self.calls = 0
+        self.system = ""
+        self.user = ""
 
     async def generate(self, system, user):
         self.calls += 1
+        self.system = system
+        self.user = user
         return self.text
 
 
@@ -137,6 +141,22 @@ def test_citations_and_followup_context():
     assert [s.id for s in answer.sources] == ["s1"]
     assert "Return policy?" in store.query
     assert "fabricated" not in store.query
+
+
+def test_provider_citation_aliases_are_translated_to_stable_source_ids():
+    source = Source(id="c-a1b2c3", name="shipping.md", text="Shipping is free at $50")
+    provider = Generator("Shipping is free at $50 [s1].")
+    answer = asyncio.run(
+        ChatService(Settings(), Store([source]), provider).answer(
+            ChatRequest(message="When is shipping free?")
+        )
+    )
+
+    assert '"id": "s1"' in provider.user
+    assert "c-a1b2c3" not in provider.user
+    assert answer.answer == "Shipping is free at $50 [c-a1b2c3]."
+    assert answer.sources == [source]
+    assert answer.grounding == "documents"
 
 
 def test_topic_switch_does_not_pollute_retrieval_query():
