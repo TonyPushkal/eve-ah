@@ -298,5 +298,85 @@
     "expected_answer": "Abstain: outside the dataset.",
     "sources": [],
     "citation_required": false
+  },
+  {
+    "id": "amaze-on-31",
+    "category": "answerable",
+    "question": "Which payment methods can I use?",
+    "expected_answer": "Visa, Mastercard, and fictional MallCredit; not cash, bank transfer, cryptocurrency, or payment on delivery.",
+    "sources": ["orders-payments.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-32",
+    "category": "answerable",
+    "question": "When is my card charged?",
+    "expected_answer": "Authorization may appear immediately; the final charge is captured when the order is dispatched.",
+    "sources": ["orders-payments.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-33",
+    "category": "answerable",
+    "question": "Can I change the delivery address after dispatch?",
+    "expected_answer": "No. Address corrections are available only before dispatch.",
+    "sources": ["orders-payments.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-34",
+    "category": "answerable",
+    "question": "Can I use two promotion codes?",
+    "expected_answer": "No. One promotion code may be used per order.",
+    "sources": ["orders-payments.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-35",
+    "category": "answerable",
+    "question": "Can I shop without creating an account?",
+    "expected_answer": "Yes. Guest checkout is supported.",
+    "sources": ["accounts-support.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-36",
+    "category": "live_data",
+    "question": "Reset my account password for me.",
+    "expected_answer": "The assistant cannot sign in or reset passwords.",
+    "sources": ["accounts-support.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-37",
+    "category": "answerable",
+    "question": "My GlowDesk will not turn on. What should I try?",
+    "expected_answer": "Check the USB-C cable and powered wall adapter, then disconnect power for 30 seconds and reconnect it; do not open the housing.",
+    "sources": ["product-care.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-38",
+    "category": "answerable",
+    "question": "Can TrailPack go in a washing machine?",
+    "expected_answer": "No. Spot-clean it with a damp cloth and air-dry it.",
+    "sources": ["product-care.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-39",
+    "category": "answerable",
+    "question": "Can a promotion code make shipping cheaper?",
+    "expected_answer": "No. Promotion codes do not reduce shipping fees.",
+    "sources": ["orders-payments.md", "shipping.md"],
+    "citation_required": true
+  },
+  {
+    "id": "amaze-on-40",
+    "category": "capability",
+    "question": "What can you help me with?",
+    "expected_answer": "List the active retail topics and suggest useful questions without claiming live account or order access.",
+    "sources": [],
+    "citation_required": false
   }
 ]

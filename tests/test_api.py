@@ -12,6 +12,19 @@ class Store:
     def search(self, query):
         return [Source(id="s1", name="policy.md", text="Returns within 30 days.", score=0.9)]
 
+    def overview(self):
+        return {
+            "topics": [
+                {
+                    "name": "Returns",
+                    "description": "Return policy",
+                    "sources": ["policy.md"],
+                    "source_ids": ["s1"],
+                }
+            ],
+            "suggested_questions": ["What is the return window?"],
+        }
+
 
 class Generator:
     async def generate(self, system, user):
@@ -29,7 +42,11 @@ def test_chat_and_health():
         assert result.status_code == 200
         assert result.json()["grounding"] == "documents"
         assert result.json()["sources"][0]["name"] == "policy.md"
-        assert "api_key" not in client.get("/api/info").text
+        info = client.get("/api/info")
+        assert "api_key" not in info.text
+        assert info.json()["topics"][0]["name"] == "Returns"
+        assert "source_ids" not in info.json()["topics"][0]
+        assert info.json()["suggested_questions"] == ["What is the return window?"]
 
 
 def test_missing_key_unready():

@@ -1,6 +1,7 @@
 """Small operator CLI: ingest locally, then serve a read-only index."""
 
 import argparse
+import asyncio
 import json
 import sys
 from pathlib import Path
@@ -24,6 +25,13 @@ def main():
     sub.add_parser("check", help="Validate configuration without making model calls")
     evaluate = sub.add_parser("evaluate", help="Measure retrieval against a JSON question set")
     evaluate.add_argument("dataset", type=Path)
+    evaluate.add_argument(
+        "--compare-modes", action="store_true", help="Compare dense and hybrid retrieval"
+    )
+    answer_evaluate = sub.add_parser(
+        "evaluate-answers", help="Generate an answer artifact for human quality review"
+    )
+    answer_evaluate.add_argument("dataset", type=Path)
     args = parser.parse_args()
     try:
         settings = load_settings(args.root)
@@ -43,11 +51,16 @@ def main():
             if args.command == "ingest":
                 print(json.dumps(knowledge.ingest(), indent=2))
                 print("Restart the server to load the active index.")
-            else:
+            elif args.command == "evaluate":
                 from eve_ah.evaluation import evaluate
 
                 knowledge.load()
-                result = evaluate(knowledge, args.dataset)
+                result = evaluate(knowledge, args.dataset, compare_modes=args.compare_modes)
+                print(json.dumps(result, indent=2))
+            else:
+                settings.require_key()
+                knowledge.load()
+                result = asyncio.run(_evaluate_answers(settings, knowledge, args.dataset))
                 print(json.dumps(result, indent=2))
     except (ValueError, EveError) as exc:
         if isinstance(exc, EveError):
@@ -62,6 +75,18 @@ def main():
             file=sys.stderr,
         )
         raise SystemExit(1) from None
+
+
+async def _evaluate_answers(settings, knowledge, dataset):
+    from eve_ah.chat import ChatService
+    from eve_ah.evaluation import evaluate_answers
+    from eve_ah.providers import Provider
+
+    provider = Provider(settings)
+    try:
+        return await evaluate_answers(ChatService(settings, knowledge, provider), dataset)
+    finally:
+        await provider.aclose()
 
 
 if __name__ == "__main__":

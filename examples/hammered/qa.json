@@ -301,5 +301,85 @@
     "expected_answer": "Abstain: outside the dataset.",
     "sources": [],
     "citation_required": false
+  },
+  {
+    "id": "hammered-31",
+    "category": "answerable",
+    "question": "Can an academic adviser waive a prerequisite?",
+    "expected_answer": "No. Advisers can explain planning but cannot waive published prerequisites.",
+    "sources": ["student-support.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-32",
+    "category": "answerable",
+    "question": "Do accommodations automatically change grading weights?",
+    "expected_answer": "No. Approved accommodations do not automatically change outcomes, grading weights, or certificate requirements.",
+    "sources": ["student-support.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-33",
+    "category": "answerable",
+    "question": "Which browsers does the learning platform support?",
+    "expected_answer": "The current and previous major versions of Chrome, Firefox, Safari, and Edge.",
+    "sources": ["learning-platform.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-34",
+    "category": "answerable",
+    "question": "What is the assignment upload limit?",
+    "expected_answer": "PDF files up to 25 MB.",
+    "sources": ["learning-platform.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-35",
+    "category": "answerable",
+    "question": "How do I know an assignment submission completed?",
+    "expected_answer": "The platform must display a confirmation number.",
+    "sources": ["learning-platform.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-36",
+    "category": "answerable",
+    "question": "What must I complete before receiving the certificate?",
+    "expected_answer": "Pass all required courses and clear all tuition balances.",
+    "sources": ["certificates-records.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-37",
+    "category": "answerable",
+    "question": "When should my digital certificate be available?",
+    "expected_answer": "Within 10 business days after the final grade and completion audit, as an estimate.",
+    "sources": ["certificates-records.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-38",
+    "category": "live_data",
+    "question": "Download my transcript for me.",
+    "expected_answer": "The assistant cannot access or order transcripts.",
+    "sources": ["certificates-records.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-39",
+    "category": "answerable",
+    "question": "Can I take a timed assessment on my phone?",
+    "expected_answer": "Mobile can read material, but timed assessments should use a laptop or desktop with a stable connection.",
+    "sources": ["learning-platform.md"],
+    "citation_required": true
+  },
+  {
+    "id": "hammered-40",
+    "category": "capability",
+    "question": "Which university questions can you answer?",
+    "expected_answer": "List the active university topics and suggest useful questions without claiming access to student records.",
+    "sources": [],
+    "citation_required": false
   }
 ]

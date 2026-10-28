@@ -111,7 +111,7 @@
         throw new Error("The server returned an incomplete answer. Please try again.");
       }
       pending.remove();
-      const labels = { documents: "Document sources", general: "General knowledge · not from your documents", insufficient: "Insufficient evidence" };
+      const labels = { documents: "Document sources", workspace: "Workspace overview", clarification: "Clarification needed", general: "General knowledge · not from your documents", insufficient: "Insufficient evidence" };
       addMessage("assistant", data.answer, labels[data.grounding] || "");
       showSources(data.sources);
       history = boundedHistory([...requestHistory, { role: "user", content: message }, { role: "assistant", content: data.answer }]);

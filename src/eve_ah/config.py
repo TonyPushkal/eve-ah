@@ -9,6 +9,13 @@ from dotenv import dotenv_values
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 
 
+class TopicConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    name: str = Field(min_length=1, max_length=100)
+    description: str = Field(default="", max_length=300)
+    sources: list[str] = Field(min_length=1, max_length=50)
+
+
 class BotConfig(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
     name: str = Field(default="eve-ah", min_length=1, max_length=80)
@@ -20,11 +27,21 @@ class BotConfig(BaseModel):
     chunk_tokens: int = Field(default=200, ge=16, le=2048)
     chunk_overlap: int = Field(default=32, ge=0)
     context_chars: int = Field(default=12000, ge=1000, le=40000)
+    retrieval_mode: Literal["dense", "hybrid"] = "hybrid"
+    rrf_k: int = Field(default=60, ge=1, le=1000)
+    topics: list[TopicConfig] = Field(default_factory=list, max_length=30)
+    suggested_questions: list[str] = Field(default_factory=list, max_length=8)
 
     @model_validator(mode="after")
     def check_overlap(self):
         if self.chunk_overlap >= self.chunk_tokens:
             raise ValueError("chunk_overlap must be smaller than chunk_tokens")
+        if any(
+            not question.strip() or len(question) > 200 for question in self.suggested_questions
+        ):
+            raise ValueError(
+                "suggested_questions must contain nonempty questions under 200 characters"
+            )
         return self
 
 

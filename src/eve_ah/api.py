@@ -123,6 +123,7 @@ def create_app(settings: Settings | None = None, knowledge=None, provider=None):
 
     @app.get("/api/info")
     async def info():
+        overview = app.state.knowledge.overview()
         return {
             "name": settings.bot.name,
             "welcome": settings.bot.welcome,
@@ -130,6 +131,11 @@ def create_app(settings: Settings | None = None, knowledge=None, provider=None):
             "ready": app.state.ready,
             "provider": settings.provider,
             "model": settings.model,
+            "topics": [
+                {key: topic[key] for key in ("name", "description", "sources")}
+                for topic in overview["topics"]
+            ],
+            "suggested_questions": overview["suggested_questions"],
         }
 
     @app.post("/api/chat", response_model=ChatResponse)

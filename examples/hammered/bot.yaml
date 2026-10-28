@@ -12,3 +12,35 @@ top_k: 4
 chunk_tokens: 200
 chunk_overlap: 32
 context_chars: 12000
+topics:
+  - name: University overview and assistant limits
+    description: What this fictional university offers and which live student records are unavailable.
+    sources: [about.md]
+  - name: Courses
+    description: Course content, prerequisites, schedules, recordings, and study expectations.
+    sources: [courses.md]
+  - name: Enrollment
+    description: Certificate requirements, course loads, deadlines, prerequisites, and wait lists.
+    sources: [enrollment.md]
+  - name: Calendar, tuition, and withdrawals
+    description: Term dates, fees, payment deadlines, add/drop rules, and refunds.
+    sources: [calendar-fees.md]
+  - name: Grading
+    description: Grade bands, weighted scores, passing requirements, and retakes.
+    sources: [grading.md]
+  - name: Student support and accommodations
+    description: Advising boundaries, disability accommodations, and unavailable live support channels.
+    sources: [student-support.md]
+  - name: Learning platform
+    description: Supported browsers, assignment uploads, confirmation numbers, and troubleshooting.
+    sources: [learning-platform.md]
+  - name: Certificates and records
+    description: Completion requirements, digital certificates, grade summaries, and transcript limits.
+    sources: [certificates-records.md]
+suggested_questions:
+  - What can you help me with?
+  - What does the Product Foundations Certificate require?
+  - When does Spring 2027 enrollment close?
+  - How is the final grade calculated?
+  - When will my digital certificate be available?
+  - Can you check whether a course has seats available now?

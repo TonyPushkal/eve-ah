@@ -66,6 +66,63 @@ def test_ingest_search_reuse_and_delete(settings):
         kb.load()
 
 
+def test_ingestion_builds_source_linked_topic_catalog(settings):
+    (settings.data_dir / "returns.md").write_text(
+        "# Returns and refunds\n\nUnused products can be returned within 30 days."
+    )
+    kb = Knowledge(settings, FakeEmbedder())
+    kb.ingest()
+    kb.load()
+    overview = kb.overview()
+    assert overview["topics"][0]["name"] == "Returns and refunds"
+    assert overview["topics"][0]["sources"] == ["returns.md"]
+    assert overview["topics"][0]["source_ids"][0].startswith("c-")
+    assert "Unused products" in overview["topics"][0]["description"]
+
+
+def test_configured_catalog_and_questions_are_validated(settings):
+    from eve_ah.config import TopicConfig
+
+    (settings.data_dir / "returns.md").write_text("# Returns\n\nReturn facts.")
+    settings.bot.topics = [
+        TopicConfig(name="Shop policies", description="Returns and refunds", sources=["returns.md"])
+    ]
+    settings.bot.suggested_questions = ["What is the return window?"]
+    kb = Knowledge(settings, FakeEmbedder())
+    kb.ingest()
+    kb.load()
+    assert kb.overview()["suggested_questions"] == ["What is the return window?"]
+    settings.bot.topics[0].sources = ["missing.md"]
+    with pytest.raises(EveError, match="unknown source"):
+        kb.ingest()
+
+
+def test_catalog_config_change_requires_reingestion(settings):
+    (settings.data_dir / "returns.md").write_text("# Returns\n\nReturn facts.")
+    settings.bot.suggested_questions = ["What is the return window?"]
+    kb = Knowledge(settings, FakeEmbedder())
+    kb.ingest()
+    settings.bot.suggested_questions = ["Can I return an item?"]
+    with pytest.raises(EveError, match="incompatible"):
+        kb.load()
+    kb.ingest()
+    kb.load()
+    assert kb.overview()["suggested_questions"] == ["Can I return an item?"]
+
+
+def test_deleted_document_removes_catalog_topic(settings):
+    returns = settings.data_dir / "returns.md"
+    returns.write_text("# Returns\n\nReturn facts.")
+    shipping = settings.data_dir / "shipping.md"
+    shipping.write_text("# Shipping\n\nShipping facts.")
+    kb = Knowledge(settings, FakeEmbedder())
+    kb.ingest()
+    shipping.unlink()
+    kb.ingest()
+    kb.load()
+    assert [topic["name"] for topic in kb.overview()["topics"]] == ["Returns"]
+
+
 def test_failed_file_keeps_previous_generation(settings):
     (settings.data_dir / "good.txt").write_text("Useful facts about returns.")
     kb = Knowledge(settings, FakeEmbedder())
@@ -158,6 +215,41 @@ def test_retrieval_score_and_context_limits(settings):
     assert sum(len(s.text) for s in result) <= 1000
     settings.bot.min_score = 1
     assert kb.search("unrelated subject") == []
+
+
+def test_hybrid_search_recovers_exact_identifier_missed_by_dense_rank(settings):
+    class DenseBiasEmbedder(FakeEmbedder):
+        def embed(self, texts):
+            rows = []
+            for text in texts:
+                vector = np.zeros(32, dtype=np.float32)
+                if "SKU-42" in text and "warranty" in text:
+                    vector[1] = 1
+                else:
+                    vector[0] = 1
+                rows.append(vector)
+            return np.array(rows, dtype=np.float32)
+
+    settings.bot.top_k = 1
+    (settings.data_dir / "general.md").write_text("Generic shopping help and overview.")
+    (settings.data_dir / "codes.md").write_text("Product SKU-42 warranty lasts two years.")
+    kb = Knowledge(settings, DenseBiasEmbedder())
+    kb.ingest()
+    kb.load()
+    assert kb.search("SKU-42", mode="dense")[0].name == "general.md"
+    result = kb.search("SKU-42", mode="hybrid")
+    assert result[0].name == "codes.md"
+    assert result[0].score > 0
+
+
+def test_lexical_index_checksum_is_verified(settings):
+    (settings.data_dir / "facts.txt").write_text("Useful exact-term facts.")
+    kb = Knowledge(settings, FakeEmbedder())
+    report = kb.ingest()
+    folder = settings.storage_dir / "generations" / report["generation"]
+    (folder / "lexical.json").write_text("{}")
+    with pytest.raises(EveError, match="damaged"):
+        kb.load()
 
 
 def test_pdf_page_reference(settings):

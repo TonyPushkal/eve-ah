@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from eve_ah.config import BotConfig, Settings, load_settings
+from eve_ah.config import BotConfig, Settings, TopicConfig, load_settings
 from eve_ah.models import ChatRequest
 
 
@@ -21,7 +21,9 @@ def test_key_required_only_for_serving():
         s.require_key()
 
 
-@pytest.mark.parametrize("kwargs", [{"provider": "other"}, {"max_tokens": 0}])
+@pytest.mark.parametrize(
+    "kwargs", [{"provider": "other"}, {"max_tokens": 0}, {"bot": {"retrieval_mode": "other"}}]
+)
 def test_invalid_settings(kwargs):
     with pytest.raises(ValidationError):
         Settings(**kwargs)
@@ -30,6 +32,18 @@ def test_invalid_settings(kwargs):
 def test_overlap_validation():
     with pytest.raises(ValidationError):
         BotConfig(chunk_tokens=40, chunk_overlap=40)
+
+
+def test_topic_and_suggested_question_validation():
+    config = BotConfig(
+        topics=[TopicConfig(name="Returns", description="Return policy", sources=["returns.md"])],
+        suggested_questions=["What can I return?"],
+    )
+    assert config.topics[0].sources == ["returns.md"]
+    with pytest.raises(ValidationError):
+        BotConfig(suggested_questions=["same"] * 9)
+    with pytest.raises(ValidationError):
+        TopicConfig(name="Returns", sources=[])
 
 
 @pytest.mark.parametrize("message", ["AI", "SDK", "你好", "123"])

@@ -12,3 +12,35 @@ top_k: 4
 chunk_tokens: 200
 chunk_overlap: 32
 context_chars: 12000
+topics:
+  - name: Store overview and assistant limits
+    description: What this fictional shop contains and which live actions the assistant cannot perform.
+    sources: [about.md]
+  - name: Products
+    description: CloudCup, GlowDesk, TrailPack, and personalized NameTag specifications and prices.
+    sources: [products.md]
+  - name: Shipping
+    description: Standard and express fees, delivery estimates, dispatch, and tracking limitations.
+    sources: [shipping.md]
+  - name: Returns and refunds
+    description: Return windows, item condition, damaged deliveries, postage, and refund timing.
+    sources: [returns.md]
+  - name: Warranty
+    description: Product warranty periods, manufacturing defects, exclusions, and claim limits.
+    sources: [warranty.md]
+  - name: Orders and payments
+    description: Payment methods, charges, promotion codes, address changes, cancellations, and receipts.
+    sources: [orders-payments.md]
+  - name: Accounts and support
+    description: Guest checkout, account limitations, browser support, and unavailable live support channels.
+    sources: [accounts-support.md]
+  - name: Product care and troubleshooting
+    description: Safe care instructions and first troubleshooting steps for the fictional products.
+    sources: [product-care.md]
+suggested_questions:
+  - What products can you tell me about?
+  - When is standard shipping free?
+  - Can I return a personalized item if it arrives damaged?
+  - Does the GlowDesk warranty cover liquid damage?
+  - How do I troubleshoot a GlowDesk that will not turn on?
+  - Can you check where my order is right now?
