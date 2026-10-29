@@ -13,6 +13,7 @@
   let epoch = 0;
   let controller = null;
   let botName = "eve-ah";
+  let suggestedQuestions = [];
 
   function updateSend() {
     send.disabled = !ready || busy || !question.value.trim();
@@ -44,23 +45,80 @@
     return article;
   }
 
+  function ask(prompt) {
+    if (!ready || busy) return;
+    question.value = prompt;
+    updateSend();
+    form.requestSubmit();
+  }
+
+  function promptButton(label, prompt = label, className = "prompt-chip") {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = className;
+    button.textContent = label;
+    button.addEventListener("click", () => ask(prompt));
+    return button;
+  }
+
+  function renderGuides(info) {
+    suggestedQuestions = Array.isArray(info.suggested_questions) ? info.suggested_questions.slice(0, 6) : [];
+    const suggestions = byId("welcome-suggestions");
+    suggestions.replaceChildren(...suggestedQuestions.map((item) => promptButton(item)));
+    byId("suggestion-guide").hidden = suggestedQuestions.length === 0;
+
+    const topics = Array.isArray(info.topics) ? info.topics.slice(0, 8) : [];
+    const topicGuides = byId("topic-guides");
+    topicGuides.replaceChildren(...topics.map((topic) => {
+      const button = promptButton(topic.name, `What can you tell me about ${topic.name}?`, "topic-chip");
+      button.title = topic.description || topic.name;
+      return button;
+    }));
+    byId("topic-guide").hidden = topics.length === 0;
+  }
+
+  function addRecoveryPrompts(article, grounding) {
+    const recoveryTypes = new Set(["action", "live_data", "out_of_scope", "insufficient", "clarification"]);
+    if (!recoveryTypes.has(grounding) || suggestedQuestions.length === 0) return;
+    const prompts = document.createElement("div");
+    prompts.className = "message-prompts";
+    prompts.setAttribute("aria-label", "Suggested questions");
+    prompts.append(...suggestedQuestions.slice(0, 3).map((item) => promptButton(item)));
+    article.append(prompts);
+  }
+
+  function sourceTitle(name) {
+    const leaf = String(name || "Source").split("/").pop().replace(/\.[^.]+$/, "");
+    return leaf.split(/[-_]+/).filter(Boolean).map((word) => word[0].toUpperCase() + word.slice(1)).join(" ");
+  }
+
+  function displayAnswer(answer, sources) {
+    let displayed = answer;
+    sources.forEach((source, index) => {
+      displayed = displayed.split(`[${source.id}]`).join(`[${index + 1}]`);
+    });
+    return displayed;
+  }
+
   function showSources(sources) {
     byId("sources").replaceChildren();
-    byId("source-empty").hidden = sources.length > 0;
-    for (const source of sources) {
+    const hasSources = sources.length > 0;
+    byId("evidence-panel").hidden = !hasSources;
+    document.querySelector(".conversation-layout").classList.toggle("has-evidence", hasSources);
+    sources.forEach((source, index) => {
       const card = document.createElement("details");
       card.className = "source-card";
       const summary = document.createElement("summary");
-      summary.textContent = source.name;
+      summary.textContent = `[${index + 1}] ${sourceTitle(source.name)}`;
       const meta = document.createElement("span");
       meta.className = "source-meta";
-      meta.textContent = `[${source.id}]${source.page ? ` · Page ${source.page}` : ""}`;
+      meta.textContent = `${source.name}${source.page ? ` · Page ${source.page}` : ""}`;
       summary.append(meta);
       const excerpt = document.createElement("p");
       excerpt.textContent = source.text;
       card.append(summary, excerpt);
       byId("sources").append(card);
-    }
+    });
   }
 
   function boundedHistory(turns) {
@@ -94,7 +152,8 @@
     byId("welcome").hidden = true;
     question.value = "";
     addMessage("user", message);
-    const pending = addMessage("assistant", "Looking through your documents…", "", "pending");
+    showSources([]);
+    const pending = addMessage("assistant", "Finding the best way to help…", "", "pending");
     pending.setAttribute("aria-busy", "true");
     form.scrollIntoView({ block: "nearest" });
     try {
@@ -111,8 +170,10 @@
         throw new Error("The server returned an incomplete answer. Please try again.");
       }
       pending.remove();
-      const labels = { documents: "Document sources", workspace: "Workspace overview", clarification: "Clarification needed", general: "General knowledge · not from your documents", insufficient: "Insufficient evidence" };
-      addMessage("assistant", data.answer, labels[data.grounding] || "");
+      const labels = { documents: "Source-backed answer", capability: "What I can help with", clarification: "A little more detail needed", general: "General knowledge · not from your documents", insufficient: "More detail needed", small_talk: "Conversation", action: "I can explain, but not complete actions", live_data: "Published information only", out_of_scope: "Try another topic" };
+      const responseType = data.response_type || data.grounding;
+      const assistant = addMessage("assistant", displayAnswer(data.answer, data.sources), labels[responseType] || "");
+      addRecoveryPrompts(assistant, responseType);
       showSources(data.sources);
       history = boundedHistory([...requestHistory, { role: "user", content: message }, { role: "assistant", content: data.answer }]);
     } catch (error) {
@@ -166,6 +227,7 @@
       if (info.welcome && info.welcome !== "Ask a question. Find the source.") {
         byId("welcome-copy").textContent = info.welcome;
       }
+      renderGuides(info);
       byId("provider-label").textContent = info.provider || "Not configured";
       byId("provider-label").title = info.model || "";
       byId("mode-label").textContent = info.mode === "general" ? "General mode" : "Knowledge mode";

@@ -7,16 +7,18 @@ import anyio
 
 from eve_ah.config import Settings
 from eve_ah.conversation import (
+    action_answer,
     capability_answer,
     clarification_answer,
+    classify_intent,
     insufficient_answer,
-    is_capability_request,
+    live_data_answer,
     needs_clarification,
+    out_of_scope_answer,
     retrieval_query,
+    small_talk_answer,
 )
 from eve_ah.models import ChatRequest, ChatResponse
-
-ABSTENTION = "I couldn't find enough supporting information in your documents to answer that."
 
 
 class ChatService:
@@ -26,10 +28,30 @@ class ChatService:
 
     async def answer(self, request: ChatRequest) -> ChatResponse:
         overview = self._overview()
-        if is_capability_request(request.message):
+        intent = classify_intent(request.message)
+        if intent == "capability":
             return ChatResponse(
                 answer=capability_answer(self.settings.bot.name, overview),
                 grounding="workspace",
+                response_type="capability",
+            )
+        if intent == "small_talk":
+            return ChatResponse(
+                answer=small_talk_answer(request.message, overview),
+                grounding="workspace",
+                response_type="small_talk",
+            )
+        if intent == "live_data":
+            return ChatResponse(
+                answer=live_data_answer(request.message, overview),
+                grounding="workspace",
+                response_type="live_data",
+            )
+        if intent == "action":
+            return ChatResponse(
+                answer=action_answer(request.message, overview),
+                grounding="workspace",
+                response_type="action",
             )
         # Prior user questions supply subjects, never factual evidence.
         previous = [t.content for t in request.history if t.role == "user"][-2:]
@@ -37,13 +59,18 @@ class ChatService:
             return ChatResponse(
                 answer=clarification_answer(overview),
                 grounding="clarification",
+                response_type="clarification",
             )
         query = retrieval_query(request.message, previous)
         sources = await anyio.to_thread.run_sync(
             self.knowledge.search, query, limiter=self.retrieval_limiter
         )
         if not sources and self.settings.bot.mode == "knowledge":
-            return ChatResponse(answer=insufficient_answer(overview), grounding="insufficient")
+            return ChatResponse(
+                answer=out_of_scope_answer(overview),
+                grounding="insufficient",
+                response_type="out_of_scope",
+            )
         citation_lookup = {f"s{index}": source for index, source in enumerate(sources, 1)}
         system = (
             f"You are {self.settings.bot.name}. {self.settings.bot.instructions}\n"
@@ -84,7 +111,7 @@ class ChatService:
             or not citations
             or any(c not in citation_lookup for c in citations)
         ):
-            return ChatResponse(answer=ABSTENTION, grounding="insufficient")
+            return ChatResponse(answer=insufficient_answer(overview), grounding="insufficient")
         cited = list(dict.fromkeys(citations))
         for alias in cited:
             answer = answer.replace(f"[{alias}]", f"[{citation_lookup[alias].id}]")

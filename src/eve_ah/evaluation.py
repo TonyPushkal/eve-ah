@@ -8,6 +8,8 @@ from pathlib import Path
 
 from eve_ah.models import ChatRequest, EveError
 
+_DETERMINISTIC_CATEGORIES = frozenset({"action", "live_data", "out_of_scope", "small_talk"})
+
 
 def _load_cases(path: Path) -> list[dict]:
     cases = json.loads(path.read_text())
@@ -147,19 +149,25 @@ async def evaluate_answers(chat, path: Path) -> dict:
                 }
             )
             continue
+        category = case.get("category", "unspecified")
         returned = {source.name for source in response.sources}
-        expected = set(case["sources"])
+        expected = set() if category in _DETERMINISTIC_CATEGORIES else set(case["sources"])
         missing = expected.difference(returned)
         citation_required = bool(case.get("citation_required", expected))
+        if category in _DETERMINISTIC_CATEGORIES:
+            citation_required = False
         citation_shape_valid = not citation_required or bool(response.sources)
-        if case.get("category") == "capability":
+        if category in _DETERMINISTIC_CATEGORIES:
+            grounding_valid = response.response_type == category
+            source_coverage_valid = not response.sources
+        elif category == "capability":
             grounding_valid = response.grounding == "workspace"
             source_coverage_valid = not response.sources
         elif expected:
             grounding_valid = response.grounding == "documents"
             source_coverage_valid = not missing
         else:
-            grounding_valid = response.grounding == "insufficient"
+            grounding_valid = response.response_type == "out_of_scope"
             source_coverage_valid = not response.sources
         structural_pass = citation_shape_valid and grounding_valid and source_coverage_valid
         structural_passes += int(structural_pass)
@@ -171,6 +179,7 @@ async def evaluate_answers(chat, path: Path) -> dict:
                 "expected_answer": case.get("expected_answer"),
                 "answer": response.answer,
                 "grounding": response.grounding,
+                "response_type": response.response_type,
                 "returned_sources": sorted(returned),
                 "missing_sources": sorted(missing),
                 "structural_pass": structural_pass,

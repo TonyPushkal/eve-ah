@@ -35,6 +35,15 @@ class ChatResponse(BaseModel):
     answer: str
     sources: list[Source] = Field(default_factory=list)
     grounding: Literal["documents", "general", "insufficient", "workspace", "clarification"]
+    response_type: Literal[
+        "answer",
+        "capability",
+        "clarification",
+        "small_talk",
+        "action",
+        "live_data",
+        "out_of_scope",
+    ] = "answer"
 
 
 class EveError(Exception):

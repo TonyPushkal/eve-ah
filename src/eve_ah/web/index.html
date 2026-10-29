@@ -6,6 +6,7 @@
   <meta name="description" content="Ask questions of your documents and inspect the evidence behind every answer.">
   <title>eve-ah — Your knowledge, in conversation</title>
   <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/guided.css">
   <script src="/static/app.js" defer></script>
 </head>
 <body>
@@ -31,7 +32,16 @@
             <div class="welcome-kicker"><span class="sunburst" aria-hidden="true">✳</span><span>A CONVERSATION WITH YOUR KNOWLEDGE</span></div>
             <h1>Ask a question.<br><em>Find the source.</em></h1>
             <p id="welcome-copy" class="welcome-copy">Bring your curiosity. Your documents hold the answers. <br>Explore them with an assistant that shows its work.</p>
-            <div class="principles"><div><span class="principle-number">01</span><span>Ask in your own words</span></div><div><span class="principle-number">02</span><span>Follow the evidence</span></div><div><span class="principle-number">03</span><span>Keep the conversation going</span></div></div>
+            <div class="welcome-guides">
+              <section id="suggestion-guide" class="guide-block" aria-labelledby="suggestion-title">
+                <p id="suggestion-title" class="guide-title">TRY A QUESTION</p>
+                <div id="welcome-suggestions" class="prompt-grid"></div>
+              </section>
+              <section id="topic-guide" class="guide-block" aria-labelledby="topic-title">
+                <p id="topic-title" class="guide-title">EXPLORE A TOPIC</p>
+                <div id="topic-guides" class="topic-grid"></div>
+              </section>
+            </div>
           </div>
           <div id="messages" class="messages" aria-live="polite" aria-relevant="additions" role="log" aria-label="Chat messages"></div>
           <div class="composer-area">
@@ -43,10 +53,9 @@
             <p class="privacy-note">Your question and relevant document excerpts are sent to your selected model provider. <span>Always check important answers.</span></p>
           </div>
         </section>
-        <aside class="evidence-panel" aria-labelledby="evidence-title">
-          <div class="panel-heading"><h2 id="evidence-title">Behind the answer</h2><span class="tiny-icon" aria-hidden="true">↗</span></div>
-          <p class="panel-description">The evidence, close at hand.</p>
-          <div id="source-empty" class="source-empty"><span class="source-illustration" aria-hidden="true">[ ]</span><h3>Follow the thread.</h3><p>Source passages appear here after an answer. Open one to see the original context.</p></div>
+        <aside id="evidence-panel" class="evidence-panel" aria-labelledby="evidence-title" hidden>
+          <div class="panel-heading"><h2 id="evidence-title">Sources for this answer</h2><span class="tiny-icon" aria-hidden="true">↗</span></div>
+          <p class="panel-description">Open a source to inspect the retrieved passage.</p>
           <div id="sources" class="sources"></div>
           <div class="session-details"><p class="eyebrow">THIS SESSION</p><dl><div><dt>Provider</dt><dd id="provider-label">Connecting…</dd></div><div><dt>Knowledge</dt><dd id="readiness-label">Checking…</dd></div><div><dt>History</dt><dd>This tab only</dd></div></dl></div>
         </aside>

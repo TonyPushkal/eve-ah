@@ -43,7 +43,135 @@ def test_no_evidence_no_provider_call():
         ChatService(Settings(), Store(), provider).answer(ChatRequest(message="unknown"))
     )
     assert answer.grounding == "insufficient"
+    assert answer.response_type == "out_of_scope"
+    assert "outside the information" in answer.answer
     assert provider.calls == 0
+
+
+@pytest.mark.parametrize(
+    ("message", "expected_limit"),
+    [
+        ("I have 3 orders to place", "can’t place orders or complete purchases"),
+        ("Can you change my shipping address?", "can’t change records or account data"),
+        ("Please book an appointment for tomorrow", "can’t book or schedule appointments"),
+        ("Can you cancel my order?", "can’t cancel orders or requests"),
+        ("Please issue my refund now", "can’t issue refunds"),
+        ("Reset my account password for me", "can’t reset passwords or account access"),
+        ("Download my transcript for me", "can’t download private files or records"),
+    ],
+)
+def test_action_requests_are_handled_without_retrieval_or_provider(message, expected_limit):
+    store = Store(
+        overview={
+            "topics": [
+                {
+                    "name": "Orders and payments",
+                    "description": "Order and payment policies",
+                    "sources": ["orders.md"],
+                    "source_ids": ["s1"],
+                }
+            ],
+            "suggested_questions": [],
+        }
+    )
+    provider = Generator("should not run")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+    )
+
+    assert answer.grounding == "workspace"
+    assert answer.response_type == "action"
+    assert expected_limit in answer.answer
+    assert "Orders and payments" in answer.answer
+    assert store.search_calls == 0
+    assert provider.calls == 0
+
+
+@pytest.mark.parametrize(
+    ("message", "expected_limit"),
+    [
+        ("How is the weather today?", "live weather or forecasts"),
+        ("Where is my order right now?", "live order, delivery, or payment status"),
+        ("Have I passed PF101?", "personal grades or records"),
+        ("How many seats are left in UX120?", "live availability or stock levels"),
+        ("Has order MM-88 been dispatched?", "live order, delivery, or payment status"),
+        ("Is the learning platform down right now?", "current service status or outages"),
+    ],
+)
+def test_live_data_requests_are_handled_without_retrieval_or_provider(message, expected_limit):
+    store = Store(
+        overview={
+            "topics": [
+                {
+                    "name": "Orders",
+                    "description": "Published order policies",
+                    "sources": ["orders.md"],
+                    "source_ids": ["s1"],
+                }
+            ],
+            "suggested_questions": [],
+        }
+    )
+    provider = Generator("should not run")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+    )
+
+    assert answer.grounding == "workspace"
+    assert answer.response_type == "live_data"
+    assert expected_limit in answer.answer
+    assert store.search_calls == 0
+    assert provider.calls == 0
+
+
+@pytest.mark.parametrize("message", ["Thanks", "Thank you!", "How are you?", "Bye"])
+def test_social_messages_get_a_short_workspace_aware_reply(message):
+    store = Store(
+        overview={
+            "topics": [
+                {
+                    "name": "Shipping",
+                    "description": "Delivery policies",
+                    "sources": ["shipping.md"],
+                    "source_ids": ["s1"],
+                }
+            ],
+            "suggested_questions": [],
+        }
+    )
+    provider = Generator("should not run")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+    )
+
+    assert answer.grounding == "workspace"
+    assert answer.response_type == "small_talk"
+    assert "Shipping" in answer.answer
+    assert store.search_calls == 0
+    assert provider.calls == 0
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "Can I cancel an order after dispatch?",
+        "When are orders dispatched?",
+    ],
+)
+def test_policy_questions_still_use_document_retrieval(message):
+    store = Store([Source(id="c-policy", name="orders.md", text="Published order policy")])
+    provider = Generator("The policy is documented [s1].")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+    )
+
+    assert answer.grounding == "documents"
+    assert store.search_calls == 1
+    assert provider.calls == 1
 
 
 @pytest.mark.parametrize(
@@ -113,6 +241,27 @@ def test_factual_help_word_is_not_misrouted():
     )
     assert answer.grounding == "documents"
     assert store.search_calls == 1
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "Can you update me on the refund policy?",
+        "Can you please update me about the refund policy?",
+    ],
+)
+def test_informational_update_request_still_uses_document_retrieval(message):
+    store = Store([Source(id="s1", name="returns.md", text="Refunds take five days")])
+    provider = Generator("Refunds take five days [s1].")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+    )
+
+    assert answer.grounding == "documents"
+    assert answer.response_type == "answer"
+    assert store.search_calls == 1
+    assert provider.calls == 1
 
 
 @pytest.mark.parametrize(
@@ -212,7 +361,7 @@ def test_ambiguous_question_without_subject_asks_for_clarification(message):
     assert provider.calls == 0
 
 
-def test_missing_information_names_available_topics():
+def test_live_order_status_names_available_topics():
     store = Store(
         overview={
             "topics": [
@@ -231,9 +380,10 @@ def test_missing_information_names_available_topics():
             ChatRequest(message="Where is order 123?")
         )
     )
-    assert answer.grounding == "insufficient"
+    assert answer.grounding == "workspace"
+    assert answer.response_type == "live_data"
     assert "Returns" in answer.answer
-    assert "indexed documents" in answer.answer
+    assert "live order, delivery, or payment status" in answer.answer
 
 
 def test_general_answers_labeled():

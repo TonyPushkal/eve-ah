@@ -148,6 +148,48 @@ def test_answer_evaluation_counts_provider_failure_instead_of_dropping_case(tmp_
     assert report["results"][0]["failure"] == "provider_or_request_failure"
 
 
+def test_answer_evaluation_accepts_deterministic_intent_routes_without_citations(tmp_path):
+    from eve_ah.models import ChatResponse
+
+    class Chat:
+        async def answer(self, request):
+            response_type = "action" if "refund" in request.message else "live_data"
+            return ChatResponse(
+                answer="This assistant cannot do that.",
+                grounding="workspace",
+                response_type=response_type,
+            )
+
+    p = tmp_path / "qa.json"
+    p.write_text(
+        json.dumps(
+            [
+                {
+                    "id": "action",
+                    "category": "action",
+                    "question": "Issue my refund",
+                    "expected_answer": "Decline the action",
+                    "sources": ["policy.md"],
+                    "citation_required": True,
+                },
+                {
+                    "id": "live",
+                    "category": "live_data",
+                    "question": "Where is my order?",
+                    "expected_answer": "Explain that live data is unavailable",
+                    "sources": ["policy.md"],
+                    "citation_required": True,
+                },
+            ]
+        )
+    )
+
+    report = __import__("asyncio").run(evaluate_answers(Chat(), p))
+
+    assert report["structural_pass_rate"] == 1
+    assert all(result["returned_sources"] == [] for result in report["results"])
+
+
 def test_demo_quality_sets_have_120_unique_cases_and_no_source_leakage():
     root = Path(__file__).parents[1] / "examples"
     cases = []

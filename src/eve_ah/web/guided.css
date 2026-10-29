@@ -1,0 +1,121 @@
+.conversation-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.conversation-layout.has-evidence {
+  grid-template-columns: minmax(0, 1fr) 266px;
+}
+
+.welcome {
+  padding-top: 68px;
+}
+
+.welcome-guides {
+  display: grid;
+  gap: 26px;
+  margin-top: 34px;
+  max-width: 760px;
+}
+
+.guide-title {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 1.5px;
+  margin: 0 0 12px;
+}
+
+.prompt-grid,
+.topic-grid,
+.message-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.prompt-chip,
+.topic-chip {
+  background: #fffefa;
+  border: 1px solid #d8dbcf;
+  border-radius: 999px;
+  color: #525b50;
+  line-height: 1.35;
+  padding: 9px 13px;
+  text-align: left;
+}
+
+.prompt-chip {
+  font-size: 11px;
+}
+
+.topic-chip {
+  background: var(--sidebar);
+  border-color: transparent;
+  font-size: 10px;
+}
+
+.prompt-chip:hover,
+.topic-chip:hover {
+  background: var(--accent-soft);
+  border-color: #e7d2c4;
+  color: #844b31;
+}
+
+.message-prompts {
+  margin: 12px 0 0 31px;
+}
+
+.message-prompts .prompt-chip {
+  font-size: 10px;
+  padding: 7px 11px;
+}
+
+.source-card summary {
+  font-weight: 600;
+}
+
+@media (min-width: 1500px) {
+  .conversation-layout.has-evidence {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+
+@media (max-width: 1150px) and (min-width: 901px) {
+  .conversation-layout.has-evidence {
+    grid-template-columns: minmax(0, 1fr) 230px;
+  }
+}
+
+@media (max-width: 900px) {
+  .conversation-layout.has-evidence {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .welcome {
+    padding-top: 42px;
+  }
+
+  .welcome-guides {
+    gap: 21px;
+    margin-top: 27px;
+  }
+
+  .prompt-grid,
+  .topic-grid {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .prompt-chip,
+  .topic-chip {
+    border-radius: 8px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .message-prompts {
+    margin-left: 0;
+  }
+}

@@ -87,11 +87,13 @@ flowchart LR
   V --> U[Answer and excerpts]
 ```
 
-In **knowledge mode** (default), unmatched questions return an insufficient-information response without calling the generation provider. Answers without valid references also abstain. Citation validation checks that a referenced passage exists; it cannot prove every generated claim is true. Review the excerpts for important decisions.
+In **knowledge mode** (default), unmatched questions return a helpful topic redirect without calling the generation provider. The intent router also handles greetings, action requests, and requests for live or personal data immediately; eve-ah explains its limit and points back to configured topics. Normal policy questions still use retrieval and source-backed generation. Answers without valid references abstain. Citation validation checks that a referenced passage exists; it cannot prove every generated claim is true. Review the excerpts for important decisions.
 
 Optional **general mode** permits explicitly labeled general-knowledge answers when retrieval finds no evidence. Neither mode executes tools or document instructions.
 
 Follow-up retrieval incorporates the last two user questions. This is deliberately simple conversation context, not a sophisticated query-rewriting system. Clear the conversation when switching topics.
+
+The browser welcome screen renders configured topics and suggested questions as clickable prompts. The evidence panel appears only for source-backed answers, and recovery responses offer next questions without exposing retrieval terminology.
 
 ## API
 
@@ -101,7 +103,7 @@ curl http://127.0.0.1:8000/api/chat \
   -d '{"message":"What is the return policy?","history":[]}'
 ```
 
-The response includes `answer`, `sources` (`id`, `name`, `text`, `page`, `score`), and `grounding` (`documents`, `general`, or `insufficient`). `/openapi.json` contains the API schema. `/health` checks liveness; `/ready` returns 503 until the server has a valid configuration and nonempty index.
+The response includes `answer`, `sources` (`id`, `name`, `text`, `page`, `score`), `grounding`, and `response_type`. `grounding` remains the stable evidence axis (`documents`, `general`, `workspace`, `clarification`, or `insufficient`); `response_type` describes the conversational behavior, such as `action`, `live_data`, `small_talk`, or `out_of_scope`. Existing clients can continue using `grounding`, while richer interfaces can use `response_type` for labels and recovery prompts. `/openapi.json` contains the exact API schema. `/health` checks liveness; `/ready` returns 503 until the server has a valid configuration and nonempty index.
 
 ## Privacy
 

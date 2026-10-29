@@ -41,12 +41,34 @@ def test_chat_and_health():
         result = client.post("/api/chat", json={"message": "What is the return policy?"})
         assert result.status_code == 200
         assert result.json()["grounding"] == "documents"
+        assert result.json()["response_type"] == "answer"
         assert result.json()["sources"][0]["name"] == "policy.md"
         info = client.get("/api/info")
         assert "api_key" not in info.text
         assert info.json()["topics"][0]["name"] == "Returns"
         assert "source_ids" not in info.json()["topics"][0]
         assert info.json()["suggested_questions"] == ["What is the return window?"]
+
+
+def test_conversation_type_is_additive_to_stable_grounding_contract():
+    with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
+        result = client.post("/api/chat", json={"message": "Can you cancel my order?"})
+
+    assert result.status_code == 200
+    assert result.json()["grounding"] == "workspace"
+    assert result.json()["response_type"] == "action"
+
+
+def test_browser_shell_has_guided_discovery_and_collapsible_evidence():
+    with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
+        page = client.get("/")
+
+    assert page.status_code == 200
+    assert 'id="welcome-suggestions"' in page.text
+    assert 'id="topic-guides"' in page.text
+    assert 'id="evidence-panel"' in page.text
+    assert 'id="evidence-panel" class="evidence-panel"' in page.text
+    assert "hidden" in page.text.split('id="evidence-panel"', 1)[1].split(">", 1)[0]
 
 
 def test_missing_key_unready():
