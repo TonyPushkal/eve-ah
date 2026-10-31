@@ -29,7 +29,7 @@ topics:
     description: Product warranty periods, manufacturing defects, exclusions, and claim limits.
     sources: [warranty.md]
   - name: Orders and payments
-    description: Payment methods, charges, promotion codes, address changes, cancellations, and receipts.
+    description: Payment methods, authorization and final charge timing, promotion codes, address changes, cancellations, and receipts.
     sources: [orders-payments.md]
   - name: Accounts and support
     description: Guest checkout, account limitations, browser support, and unavailable live support channels.

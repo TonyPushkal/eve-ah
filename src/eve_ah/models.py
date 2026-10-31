@@ -34,6 +34,7 @@ class Source(BaseModel):
 class ChatResponse(BaseModel):
     answer: str
     sources: list[Source] = Field(default_factory=list)
+    suggested_questions: list[str] = Field(default_factory=list)
     grounding: Literal["documents", "general", "insufficient", "workspace", "clarification"]
     response_type: Literal[
         "answer",

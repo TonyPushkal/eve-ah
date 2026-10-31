@@ -54,6 +54,11 @@ def is_capability_request(message: str) -> bool:
         or re.fullmatch(r"which\s+.+\s+(?:questions|topics)\s+can\s+you\s+(?:answer|explain)", text)
         or re.fullmatch(r"what\s+.+\s+topics\s+do\s+you\s+know\s+about", text)
         or re.fullmatch(r"which\s+parts\s+of\s+.+\s+can\s+you\s+explain", text)
+        or re.fullmatch(
+            r"how\s+many\s+(?:(?:item|knowledge|product)\s+)?"
+            r"(?:topics?|categor(?:y|ies|izes?))\s+(?:do\s+you\s+have|are\s+there)",
+            text,
+        )
     )
 
 
@@ -160,19 +165,61 @@ def retrieval_query(message: str, previous_user_messages: list[str]) -> str:
     return message
 
 
-def needs_clarification(message: str, previous_user_messages: list[str]) -> bool:
+def _needs_clarification(message: str, previous_user_messages: list[str]) -> bool:
     return not previous_user_messages and is_dependent_followup(message)
 
 
-def clarification_answer(overview: dict) -> str:
-    names = _topic_names(overview)
-    if names:
+def _is_ambiguous_payment_timing(message: str) -> bool:
+    text = _normalized(message)
+    if not re.search(r"\bpayments?\b", text):
+        return False
+    if re.search(r"\b(?:deadline|due|pay\s+by|tuition)\b", text):
+        return False
+    if re.search(r"\b(?:refund|authorization|authorisation|authorized|authorised)\b", text):
+        return False
+    if re.search(r"\b(?:final\s+(?:payment\s+)?charg(?:e|ed)|captured|dispatch)\b", text):
+        return False
+    return bool(re.search(r"\b(?:how\s+long|when|processing|process|take|takes|timing)\b", text))
+
+
+def _payment_stage_questions(overview: dict) -> list[tuple[str, str]]:
+    catalog = " ".join(
+        f"{topic.get('name', '')} {topic.get('description', '')}"
+        for topic in overview.get("topics", [])
+    ).lower()
+    stages = []
+    if re.search(r"\bauthori[sz](?:ation|e|ed)\b", catalog):
+        stages.append(("authorization", "When does payment authorization appear?"))
+    if re.search(r"\b(?:final\s+charge|charge\s+timing|captur(?:e|ed))\b", catalog):
+        stages.append(("final charge", "When is the final payment charged?"))
+    if re.search(r"\brefund(?:s|ing)?\b", catalog):
+        stages.append(("refund", "How long does a refund take?"))
+    return stages
+
+
+def clarification_response(
+    message: str, previous_user_messages: list[str], overview: dict
+) -> tuple[str, list[str]] | None:
+    payment_stages = _payment_stage_questions(overview)
+    if _is_ambiguous_payment_timing(message) and len(payment_stages) > 1:
+        stage_names = [name for name, _ in payment_stages]
+        choices = ", ".join(stage_names[:-1]) + f", or {stage_names[-1]}"
         return (
-            "Which topic or item do you mean? For example, you can ask about "
-            + ", ".join(names[:4])
-            + "."
+            f"Which payment stage do you mean: {choices}? Choose one below so I can answer from "
+            "the indexed documents.",
+            [question for _, question in payment_stages],
         )
-    return "Which topic, item, or earlier question do you mean?"
+    if not _needs_clarification(message, previous_user_messages):
+        return None
+    names = _topic_names(overview)
+    answer = (
+        "Which topic or item do you mean? For example, you can ask about "
+        + ", ".join(names[:4])
+        + "."
+        if names
+        else "Which topic, item, or earlier question do you mean?"
+    )
+    return answer, recovery_questions(message, overview)
 
 
 def _topic_names(overview: dict) -> list[str]:
@@ -180,8 +227,12 @@ def _topic_names(overview: dict) -> list[str]:
     return [name for name in names if name]
 
 
+def _tokens(text: str) -> set[str]:
+    return set(_normalized(text).split())
+
+
 def _relevant_topic_names(message: str, overview: dict, limit: int = 3) -> list[str]:
-    message_tokens = set(_normalized(message).split())
+    message_tokens = _tokens(message)
     ranked = []
     for position, topic in enumerate(overview.get("topics", [])):
         name = str(topic.get("name", "")).strip()
@@ -193,6 +244,28 @@ def _relevant_topic_names(message: str, overview: dict, limit: int = 3) -> list[
         ranked.append((-overlap, position, name))
     ranked.sort()
     return [name for _, _, name in ranked[:limit]]
+
+
+def recovery_questions(message: str, overview: dict, limit: int = 3) -> list[str]:
+    message_tokens = _tokens(message)
+    configured = [
+        str(question).strip()
+        for question in overview.get("suggested_questions", [])
+        if str(question).strip()
+    ]
+    ranked_questions = sorted(
+        configured,
+        key=lambda question: -len(message_tokens.intersection(_tokens(question))),
+    )
+    result = [
+        question for question in ranked_questions if message_tokens.intersection(_tokens(question))
+    ]
+    result.extend(
+        f"What can you tell me about {name}?"
+        for name in _relevant_topic_names(message, overview, limit=limit)
+    )
+    result.extend(ranked_questions)
+    return list(dict.fromkeys(result))[:limit]
 
 
 def _topic_help(message: str, overview: dict) -> str:
@@ -273,7 +346,10 @@ def capability_answer(bot_name: str, overview: dict) -> str:
             f"I’m {bot_name}. I answer questions from the documents currently indexed in this "
             "workspace. No topic overview is available yet; re-run ingestion after adding documents."
         )
-    lines = [f"I’m {bot_name}. I can help with:"]
+    topic_label = "topic" if len(topics) == 1 else "topics"
+    intro = f"I’m {bot_name}. I have information across {len(topics)} {topic_label}"
+    intro += ". Here are the first 8:" if len(topics) > 8 else ":"
+    lines = [intro]
     for topic in topics[:8]:
         description = str(topic.get("description", "")).strip()
         suffix = f" — {description}" if description else ""
@@ -284,23 +360,22 @@ def capability_answer(bot_name: str, overview: dict) -> str:
     return "\n".join(lines)
 
 
-def insufficient_answer(overview: dict) -> str:
-    names = _topic_names(overview)
+def insufficient_answer(message: str, overview: dict) -> str:
+    names = _relevant_topic_names(message, overview)
     if names:
-        available = ", ".join(names[:6])
+        available = ", ".join(names)
         return (
             "I found related information, but not enough detail to answer that safely. "
-            f"Try rephrasing your question or ask about: {available}."
+            f"Try a more specific question about {available}."
         )
     return "I found related information, but not enough detail to answer that safely."
 
 
-def out_of_scope_answer(overview: dict) -> str:
-    names = _topic_names(overview)
-    suggestions = [str(item).strip() for item in overview.get("suggested_questions", []) if item]
+def out_of_scope_answer(message: str, overview: dict, suggestions: list[str]) -> str:
+    names = _relevant_topic_names(message, overview)
     if names:
-        answer = "That’s outside the information available to me. I can help with: " + ", ".join(
-            names[:6]
+        answer = "That’s outside the information available to me. I can help with " + ", ".join(
+            names
         )
         if suggestions:
             answer += f". Try asking: “{suggestions[0]}”"

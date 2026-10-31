@@ -59,9 +59,43 @@ def test_conversation_type_is_additive_to_stable_grounding_contract():
     assert result.json()["response_type"] == "action"
 
 
+def test_chat_can_return_contextual_followup_questions():
+    class PaymentStore(Store):
+        def overview(self):
+            return {
+                "topics": [
+                    {
+                        "name": "Orders and payments",
+                        "description": "Payment authorization and final charge timing",
+                        "sources": ["payments.md"],
+                    },
+                    {
+                        "name": "Returns",
+                        "description": "Return policy and refund timing",
+                        "sources": ["policy.md"],
+                    },
+                ],
+                "suggested_questions": [],
+            }
+
+    with TestClient(create_app(Settings(api_key="test"), PaymentStore(), Generator())) as client:
+        result = client.post(
+            "/api/chat", json={"message": "How long does a payment take to process?"}
+        )
+
+    assert result.status_code == 200
+    assert result.json()["grounding"] == "clarification"
+    assert result.json()["suggested_questions"] == [
+        "When does payment authorization appear?",
+        "When is the final payment charged?",
+        "How long does a refund take?",
+    ]
+
+
 def test_browser_shell_has_guided_discovery_and_collapsible_evidence():
     with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
         page = client.get("/")
+        app_js = client.get("/static/app.js")
 
     assert page.status_code == 200
     assert 'id="welcome-suggestions"' in page.text
@@ -69,6 +103,11 @@ def test_browser_shell_has_guided_discovery_and_collapsible_evidence():
     assert 'id="evidence-panel"' in page.text
     assert 'id="evidence-panel" class="evidence-panel"' in page.text
     assert "hidden" in page.text.split('id="evidence-panel"', 1)[1].split(">", 1)[0]
+    assert "data.suggested_questions" in app_js.text
+    assert (
+        'const recoveryType = responseType === "answer" ? data.grounding : responseType'
+        in app_js.text
+    )
 
 
 def test_missing_key_unready():

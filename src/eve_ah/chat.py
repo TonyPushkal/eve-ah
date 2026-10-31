@@ -9,12 +9,12 @@ from eve_ah.config import Settings
 from eve_ah.conversation import (
     action_answer,
     capability_answer,
-    clarification_answer,
+    clarification_response,
     classify_intent,
     insufficient_answer,
     live_data_answer,
-    needs_clarification,
     out_of_scope_answer,
+    recovery_questions,
     retrieval_query,
     small_talk_answer,
 )
@@ -46,30 +46,37 @@ class ChatService:
                 answer=live_data_answer(request.message, overview),
                 grounding="workspace",
                 response_type="live_data",
+                suggested_questions=recovery_questions(request.message, overview),
             )
         if intent == "action":
             return ChatResponse(
                 answer=action_answer(request.message, overview),
                 grounding="workspace",
                 response_type="action",
+                suggested_questions=recovery_questions(request.message, overview),
             )
         # Prior user questions supply subjects, never factual evidence.
         previous = [t.content for t in request.history if t.role == "user"][-2:]
-        if needs_clarification(request.message, previous):
+        clarification = clarification_response(request.message, previous, overview)
+        if clarification:
+            answer, suggestions = clarification
             return ChatResponse(
-                answer=clarification_answer(overview),
+                answer=answer,
                 grounding="clarification",
                 response_type="clarification",
+                suggested_questions=suggestions,
             )
         query = retrieval_query(request.message, previous)
         sources = await anyio.to_thread.run_sync(
             self.knowledge.search, query, limiter=self.retrieval_limiter
         )
         if not sources and self.settings.bot.mode == "knowledge":
+            suggestions = recovery_questions(request.message, overview)
             return ChatResponse(
-                answer=out_of_scope_answer(overview),
+                answer=out_of_scope_answer(request.message, overview, suggestions),
                 grounding="insufficient",
                 response_type="out_of_scope",
+                suggested_questions=suggestions,
             )
         citation_lookup = {f"s{index}": source for index, source in enumerate(sources, 1)}
         system = (
@@ -111,7 +118,11 @@ class ChatService:
             or not citations
             or any(c not in citation_lookup for c in citations)
         ):
-            return ChatResponse(answer=insufficient_answer(overview), grounding="insufficient")
+            return ChatResponse(
+                answer=insufficient_answer(request.message, overview),
+                grounding="insufficient",
+                suggested_questions=recovery_questions(request.message, overview),
+            )
         cited = list(dict.fromkeys(citations))
         for alias in cited:
             answer = answer.replace(f"[{alias}]", f"[{citation_lookup[alias].id}]")

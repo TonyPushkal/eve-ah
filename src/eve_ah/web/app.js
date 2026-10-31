@@ -77,13 +77,16 @@
     byId("topic-guide").hidden = topics.length === 0;
   }
 
-  function addRecoveryPrompts(article, grounding) {
+  function addRecoveryPrompts(article, grounding, contextualQuestions = []) {
     const recoveryTypes = new Set(["action", "live_data", "out_of_scope", "insufficient", "clarification"]);
-    if (!recoveryTypes.has(grounding) || suggestedQuestions.length === 0) return;
+    const questions = Array.isArray(contextualQuestions) && contextualQuestions.length > 0
+      ? contextualQuestions
+      : suggestedQuestions;
+    if (!recoveryTypes.has(grounding) || questions.length === 0) return;
     const prompts = document.createElement("div");
     prompts.className = "message-prompts";
     prompts.setAttribute("aria-label", "Suggested questions");
-    prompts.append(...suggestedQuestions.slice(0, 3).map((item) => promptButton(item)));
+    prompts.append(...questions.slice(0, 3).map((item) => promptButton(item)));
     article.append(prompts);
   }
 
@@ -173,7 +176,8 @@
       const labels = { documents: "Source-backed answer", capability: "What I can help with", clarification: "A little more detail needed", general: "General knowledge · not from your documents", insufficient: "More detail needed", small_talk: "Conversation", action: "I can explain, but not complete actions", live_data: "Published information only", out_of_scope: "Try another topic" };
       const responseType = data.response_type || data.grounding;
       const assistant = addMessage("assistant", displayAnswer(data.answer, data.sources), labels[responseType] || "");
-      addRecoveryPrompts(assistant, responseType);
+      const recoveryType = responseType === "answer" ? data.grounding : responseType;
+      addRecoveryPrompts(assistant, recoveryType, data.suggested_questions);
       showSources(data.sources);
       history = boundedHistory([...requestHistory, { role: "user", content: message }, { role: "assistant", content: data.answer }]);
     } catch (error) {

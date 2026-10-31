@@ -221,6 +221,46 @@ def test_capability_questions_use_active_catalog_without_provider(message):
     assert provider.calls == 0
 
 
+def test_natural_catalog_count_question_reports_configured_topics_without_retrieval():
+    topics = [
+        {
+            "name": name,
+            "description": f"Information about {name.lower()}",
+            "sources": [f"{index}.md"],
+            "source_ids": [f"s{index}"],
+        }
+        for index, name in enumerate(
+            [
+                "Store overview",
+                "Products",
+                "Shipping",
+                "Returns and refunds",
+                "Warranty",
+                "Orders and payments",
+                "Accounts and support",
+                "Product care",
+            ],
+            1,
+        )
+    ]
+    store = Store(overview={"topics": topics, "suggested_questions": []})
+    provider = Generator("should not run")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(
+            ChatRequest(message="how many item categorizes do you have?")
+        )
+    )
+
+    assert answer.grounding == "workspace"
+    assert answer.response_type == "capability"
+    assert "8 topics" in answer.answer
+    assert "Products" in answer.answer
+    assert "Orders and payments" in answer.answer
+    assert store.search_calls == 0
+    assert provider.calls == 0
+
+
 def test_capability_question_without_catalog_explains_ingestion():
     answer = asyncio.run(
         ChatService(Settings(), Store(), Generator("unused")).answer(
@@ -359,6 +399,102 @@ def test_ambiguous_question_without_subject_asks_for_clarification(message):
     assert "Returns" in answer.answer
     assert store.search_calls == 0
     assert provider.calls == 0
+
+
+def test_ambiguous_payment_timing_asks_which_stage_and_offers_focused_choices():
+    store = Store(
+        overview={
+            "topics": [
+                {
+                    "name": "Orders and payments",
+                    "description": "Payment authorization, final charge timing, and receipts",
+                    "sources": ["orders-payments.md"],
+                    "source_ids": ["s1"],
+                },
+                {
+                    "name": "Returns and refunds",
+                    "description": "Return eligibility and refund timing",
+                    "sources": ["returns.md"],
+                    "source_ids": ["s2"],
+                },
+            ],
+            "suggested_questions": ["When is shipping free?"],
+        }
+    )
+    provider = Generator("should not run")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(
+            ChatRequest(message="how long for a payment to process from india")
+        )
+    )
+
+    assert answer.grounding == "clarification"
+    assert answer.response_type == "clarification"
+    assert "authorization" in answer.answer
+    assert "final charge" in answer.answer
+    assert "refund" in answer.answer
+    assert answer.suggested_questions == [
+        "When does payment authorization appear?",
+        "When is the final payment charged?",
+        "How long does a refund take?",
+    ]
+    assert store.search_calls == 0
+    assert provider.calls == 0
+
+
+def test_payment_deadline_workspace_uses_retrieval_instead_of_retail_clarification():
+    store = Store(
+        [Source(id="deadline", name="calendar-fees.md", text="Tuition is due 15 January.")],
+        overview={
+            "topics": [
+                {
+                    "name": "Calendar, tuition, and withdrawals",
+                    "description": "Term dates, fees, payment deadlines, and refunds",
+                    "sources": ["calendar-fees.md"],
+                    "source_ids": ["deadline"],
+                }
+            ],
+            "suggested_questions": [],
+        },
+    )
+    provider = Generator("Tuition is due 15 January [s1].")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(
+            ChatRequest(message="When is my tuition payment due?")
+        )
+    )
+
+    assert answer.grounding == "documents"
+    assert store.search_calls == 1
+    assert provider.calls == 1
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "When does payment authorization appear?",
+        "When is the final payment charged?",
+        "How long does a refund take?",
+    ],
+)
+def test_payment_clarification_choices_continue_to_document_retrieval(message):
+    store = Store([Source(id="policy", name="payments.md", text="Published timing policy")])
+    provider = Generator("The timing is documented [s1].")
+
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(
+            ChatRequest(
+                message=message,
+                history=[{"role": "user", "content": "How long does a payment take?"}],
+            )
+        )
+    )
+
+    assert answer.grounding == "documents"
+    assert store.search_calls == 1
+    assert provider.calls == 1
 
 
 def test_live_order_status_names_available_topics():
