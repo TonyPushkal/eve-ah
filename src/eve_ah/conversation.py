@@ -147,16 +147,62 @@ def _action_verb(message: str) -> str | None:
     return indirect.group("verb") if indirect else None
 
 
+_PRONOUNS = {"it", "its", "that", "those", "them", "they"}
+_FRAME_WORDS = {
+    "a",
+    "about",
+    "an",
+    "and",
+    "are",
+    "be",
+    "can",
+    "could",
+    "did",
+    "do",
+    "does",
+    "get",
+    "how",
+    "i",
+    "if",
+    "in",
+    "is",
+    "long",
+    "many",
+    "much",
+    "of",
+    "or",
+    "please",
+    "so",
+    "soon",
+    "take",
+    "takes",
+    "the",
+    "to",
+    "was",
+    "were",
+    "what",
+    "when",
+    "will",
+    "why",
+    "would",
+    "you",
+}
+
+
 def is_dependent_followup(message: str) -> bool:
-    text = _normalized(message)
-    words = text.split()
+    """A message depends on earlier turns when it names no subject of its own."""
+    words = _normalized(message).split()
     if not words or len(words) > 12:
         return False
-    if re.match(r"^(?:and\s+)?what\s+(?:about|if)\b", text):
+    subject_words = [word for word in words if word not in _FRAME_WORDS]
+    if not subject_words:
         return True
-    if re.match(r"^(?:and\s+)?(?:how|when|why)\s+(?:long|much|many|soon|about)\b", text):
-        return True
-    return bool(set(words).intersection({"it", "its", "that", "those", "them", "they"}))
+    first_pronoun = next((i for i, word in enumerate(words) if word in _PRONOUNS), None)
+    if first_pronoun is None:
+        return False
+    # A pronoun is resolved in-message when a subject precedes it.
+    named_before = [word for word in words[:first_pronoun] if word not in _FRAME_WORDS]
+    return len(named_before) < 2
 
 
 def retrieval_query(message: str, previous_user_messages: list[str]) -> str:

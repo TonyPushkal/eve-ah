@@ -375,7 +375,9 @@ def test_anaphoric_followup_uses_previous_user_subject():
     assert "arrived damaged" in store.query
 
 
-@pytest.mark.parametrize("message", ["How long?", "What about that?", "Can I do it?"])
+@pytest.mark.parametrize(
+    "message", ["How long?", "What about that?", "Can I do it?", "How long does it take?"]
+)
 def test_ambiguous_question_without_subject_asks_for_clarification(message):
     store = Store(
         overview={
@@ -399,6 +401,91 @@ def test_ambiguous_question_without_subject_asks_for_clarification(message):
     assert "Returns" in answer.answer
     assert store.search_calls == 0
     assert provider.calls == 0
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "how long to get refund",
+        "How long does a refund take?",
+        "How long does shipping take?",
+        "How much does CloudCup cost?",
+        "How many products are listed?",
+        "How long is the withdrawal window for the course?",
+        "How much does CloudCup cost and how much does it hold?",
+        "Can I return a NameTag because I no longer want it?",
+        "May I enroll in Product Lab without its prerequisites?",
+    ],
+)
+def test_first_turn_question_with_its_own_subject_goes_to_retrieval(message):
+    store = Store([Source(id="s1", name="policy.md", text="Published policy")])
+    provider = Generator("The policy is published [s1].")
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+    )
+    assert answer.grounding == "documents"
+    assert store.search_calls == 1
+    assert store.query == message
+
+
+@pytest.mark.parametrize("message", ["How long?", "How much?", "How many?", "What about that?"])
+def test_bare_question_with_history_inherits_previous_subject(message):
+    store = Store([Source(id="s1", name="policy.md", text="Published policy")])
+    request = ChatRequest(
+        message=message,
+        history=[
+            {"role": "user", "content": "What is the return policy?"},
+            {"role": "assistant", "content": "Returns take 30 days."},
+        ],
+    )
+    asyncio.run(ChatService(Settings(), store, Generator("Policy [s1].")).answer(request))
+    assert "What is the return policy?" in store.query
+    assert message in store.query
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "How long does shipping take?",
+        "How much does CloudCup cost?",
+        "How many products are listed?",
+    ],
+)
+def test_explicit_new_subject_does_not_inherit_unrelated_history(message):
+    store = Store([Source(id="s1", name="policy.md", text="Published policy")])
+    request = ChatRequest(
+        message=message,
+        history=[
+            {"role": "user", "content": "Can I return a personalized item?"},
+            {"role": "assistant", "content": "Not for change of mind."},
+        ],
+    )
+    asyncio.run(ChatService(Settings(), store, Generator("Policy [s1].")).answer(request))
+    assert store.query == message
+
+
+@pytest.mark.parametrize(
+    "history", [[], [{"role": "user", "content": "How long does a payment take?"}]]
+)
+@pytest.mark.parametrize(
+    "message",
+    [
+        "When does payment authorization appear?",
+        "When is the final payment charged?",
+        "How long does a refund take?",
+    ],
+)
+def test_each_payment_clarification_choice_retrieves_with_or_without_history(message, history):
+    store = Store([Source(id="s1", name="payments.md", text="Published timing policy")])
+    provider = Generator("The timing is documented [s1].")
+    answer = asyncio.run(
+        ChatService(Settings(), store, provider).answer(
+            ChatRequest(message=message, history=history)
+        )
+    )
+    assert answer.grounding == "documents"
+    assert store.search_calls == 1
+    assert provider.calls == 1
 
 
 def test_ambiguous_payment_timing_asks_which_stage_and_offers_focused_choices():
