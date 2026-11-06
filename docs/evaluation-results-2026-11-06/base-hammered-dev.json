@@ -1,0 +1,783 @@
+{
+  "kind": "conversation_end_to_end",
+  "cases": 38,
+  "passed": 23,
+  "pass_rate": 0.6052631578947368,
+  "categories": {
+    "paraphrase": {
+      "cases": 9,
+      "passed": 7
+    },
+    "personal_record": {
+      "cases": 6,
+      "passed": 1
+    },
+    "action": {
+      "cases": 3,
+      "passed": 2
+    },
+    "policy_with_my": {
+      "cases": 4,
+      "passed": 4
+    },
+    "followup": {
+      "cases": 3,
+      "passed": 1
+    },
+    "ambiguity": {
+      "cases": 2,
+      "passed": 1
+    },
+    "topic_switch": {
+      "cases": 2,
+      "passed": 2
+    },
+    "count_list": {
+      "cases": 4,
+      "passed": 1
+    },
+    "unsupported": {
+      "cases": 3,
+      "passed": 3
+    },
+    "small_talk": {
+      "cases": 2,
+      "passed": 1
+    }
+  },
+  "avg_provider_calls": 0.79,
+  "results": [
+    {
+      "id": "hammered-d01",
+      "category": "paraphrase",
+      "question": "what do I need to finish to get the certificate",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "certificates-records.md",
+        "enrollment.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 2024.5,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nTo earn the Product Foundations Certificate, you need to complete the following requirements:\n* Complete the required courses: **PF101**, **DA110**, **UX120**, and **PL201**, which total 12 credits [c-bd79c4e6b1b442d2].\n* Earn a grade of **C or better** in each course [c-bd79c4e6b1b442d2]. \n* Clear all tuition balances [c-af0a4fdc74470793].\n* Retake any failed required course under the published retake limit if necessary [c-af0a4fdc74470793].\n\nPlease note that completing all courses takes at least two terms due to the 6-credit term limit, assuming the required courses are offered and seats are available [c-bd79c4e6b1b442d2]. \n\nThe assistant cannot access your specific grades, completion audit, balance, certificate status, or transcript to confirm whether you have personally finished these items [c-af0a4fdc74470793]."
+    },
+    {
+      "id": "hammered-d02",
+      "category": "paraphrase",
+      "question": "when does signing up for spring close",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "calendar-fees.md",
+        "certificates-records.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1049.7,
+      "suggested_questions": [
+        "When does Spring 2027 enrollment close?",
+        "What does the Product Foundations Certificate require?",
+        "When will my digital certificate be available?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d03",
+      "category": "paraphrase",
+      "question": "whats the cost of PL201",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "enrollment.md",
+        "learning-platform.md",
+        "student-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1129.2,
+      "suggested_questions": [
+        "What does the Product Foundations Certificate require?",
+        "How is the final grade calculated?",
+        "What can you tell me about University overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d04",
+      "category": "paraphrase",
+      "question": "what score do I need to pass a course",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "calendar-fees.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1668.8,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! Here are our grading rules regarding course scores:\n\n* **Passing Grade for Certificate Requirement:** A course score of at least 70 earns a C or better, which satisfies the certificate grade requirement [c-efa6faa4f55de998]. \n* **Grade Scale:** \n  * A: 90\u2013100 [c-efa6faa4f55de998]\n  * B: 80\u201389.99 [c-efa6faa4f55de998]\n  * C: 70\u201379.99 [c-efa6faa4f55de998]\n  * D: 60\u201369.99 [c-efa6faa4f55de998]\n  * F: Below 60 [c-efa6faa4f55de998]\n* **No Rounding:** Scores are not rounded up to cross a grade boundary (for example, 69.9 is a D and does not meet the certificate requirement) [c-efa6faa4f55de998]."
+    },
+    {
+      "id": "hammered-d05",
+      "category": "paraphrase",
+      "question": "how much do assignments lose if they are a few hours late",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "enrollment.md",
+        "grading.md",
+        "learning-platform.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1071.2,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nWithout a prior approved extension, work submitted up to 24 hours late loses 10 percentage points from that assignment's score, with a minimum of zero [c-188db0dc304eb0cb]."
+    },
+    {
+      "id": "hammered-d06",
+      "category": "paraphrase",
+      "question": "how big can an upload be",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "learning-platform.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1060.5,
+      "suggested_questions": [],
+      "answer": "Uploaded assignments accept PDF files up to 25 MB [c-6038e1e547cd4b58]."
+    },
+    {
+      "id": "hammered-d07",
+      "category": "paraphrase",
+      "question": "can I watch the class recordings later",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "courses.md",
+        "grading.md",
+        "learning-platform.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1161.7,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nYes, session recordings are available for 30 days after each class [c-a730c53e6b166b27]. However, please note that watching these recordings does not replace any participation requirements set by the instructor [c-a730c53e6b166b27]."
+    },
+    {
+      "id": "hammered-d08",
+      "category": "paraphrase",
+      "question": "how long until my digital certificate shows up",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "certificates-records.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1164.4,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nA digital certificate becomes available within 10 business days after the final grade is posted and the completion audit finishes, though this date is an estimate rather than a guarantee [c-af0a4fdc74470793]. \n\nPlease note that the assistant cannot access a student's certificate status, completion audit, grades, balance, or transcript [c-af0a4fdc74470793]."
+    },
+    {
+      "id": "hammered-d09",
+      "category": "paraphrase",
+      "question": "Can I take all four courses in one term?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1881.8,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nNo, students cannot take all four courses in one term [c-232a0a667bcb6571]. Additionally, students are limited to a maximum of 6 credits per term, and each published course is worth 3 credits [c-695b96a60f224601]."
+    },
+    {
+      "id": "hammered-d10",
+      "category": "personal_record",
+      "question": "find my grades",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1046.5,
+      "suggested_questions": [
+        "When will my digital certificate be available?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d11",
+      "category": "personal_record",
+      "question": "can you check on my application",
+      "passed": false,
+      "reasons": [
+        "outcome=answer"
+      ],
+      "outcome": "answer",
+      "retrieved": [
+        "enrollment.md",
+        "learning-platform.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1182.6,
+      "suggested_questions": [],
+      "answer": "At Hammered University, the assistant cannot submit an application or check its status [c-695b96a60f224601]."
+    },
+    {
+      "id": "hammered-d12",
+      "category": "personal_record",
+      "question": "did I pass PF101",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 955.7,
+      "suggested_questions": [
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?",
+        "What can you tell me about Enrollment?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d13",
+      "category": "personal_record",
+      "question": "show me my transcript",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "certificates-records.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 853.1,
+      "suggested_questions": [
+        "What can you help me with?",
+        "When will my digital certificate be available?",
+        "What can you tell me about Certificates and records?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Certificates and records, University overview and assistant limits, Courses."
+    },
+    {
+      "id": "hammered-d14",
+      "category": "personal_record",
+      "question": "what's my tuition balance",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "enrollment.md",
+        "learning-platform.md",
+        "student-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1979.0,
+      "suggested_questions": [
+        "When will my digital certificate be available?",
+        "What can you tell me about Calendar, tuition, and withdrawals?",
+        "What can you tell me about University overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Calendar, tuition, and withdrawals, University overview and assistant limits, Courses."
+    },
+    {
+      "id": "hammered-d15",
+      "category": "personal_record",
+      "question": "are there seats left in DA110 right now",
+      "passed": true,
+      "reasons": [],
+      "outcome": "live_data",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.8,
+      "suggested_questions": [
+        "Can you check whether a course has seats available now?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I can\u2019t check live availability or stock levels. I can only use the information provided in this workspace, but I can still help with University overview and assistant limits, Courses, or Enrollment."
+    },
+    {
+      "id": "hammered-d16",
+      "category": "action",
+      "question": "enroll me in UX120",
+      "passed": true,
+      "reasons": [],
+      "outcome": "action",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.8,
+      "suggested_questions": [
+        "What can you help me with?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I can\u2019t perform actions in external systems. I can still help with University overview and assistant limits, Courses, or Enrollment. I can also help you prepare what you need. What would you like to know?"
+    },
+    {
+      "id": "hammered-d17",
+      "category": "action",
+      "question": "please book an appointment with an adviser",
+      "passed": true,
+      "reasons": [],
+      "outcome": "action",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.6,
+      "suggested_questions": [
+        "What can you help me with?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I can\u2019t book or schedule appointments. I can still help with University overview and assistant limits, Courses, or Enrollment. I can also help you prepare what you need. What would you like to know?"
+    },
+    {
+      "id": "hammered-d18",
+      "category": "action",
+      "question": "waive the PF101 prerequisite for me",
+      "passed": false,
+      "reasons": [
+        "outcome=answer"
+      ],
+      "outcome": "answer",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md",
+        "student-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 14490.4,
+      "suggested_questions": [],
+      "answer": "Academic advisers cannot waive published prerequisites [c-aa2a332549859ebf]. Furthermore, there is no published prerequisite-waiver process [c-695b96a60f224601]."
+    },
+    {
+      "id": "hammered-d19",
+      "category": "policy_with_my",
+      "question": "What happens to my tuition if I drop a course before add/drop closes?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "calendar-fees.md",
+        "enrollment.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1293.5,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University, where excellence is always under construction! \n\nIf you drop a course by the add/drop deadline, you will receive a full tuition refund with no transcript entry [c-fdfddfcd1e74248c]."
+    },
+    {
+      "id": "hammered-d20",
+      "category": "policy_with_my",
+      "question": "If I fail a course, can I retake it?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "calendar-fees.md",
+        "certificates-records.md",
+        "enrollment.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 3467.5,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nYes, you may retake a course once under our published policy [c-188db0dc304eb0cb]. However, please note the following details provided in our guidelines:\n\n* **Tuition:** The retake requires full course tuition [c-188db0dc304eb0cb].\n* **Transcript & Requirements:** Both attempts remain on your transcript, and the higher grade is used to assess the certificate requirement [c-188db0dc304eb0cb]. Furthermore, any failed required course must be retaken under the published retake limit before the Product Foundations Certificate can be awarded [c-af0a4fdc74470793]."
+    },
+    {
+      "id": "hammered-d21",
+      "category": "policy_with_my",
+      "question": "My upload didn't show a confirmation number, what now?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "learning-platform.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1371.1,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nBased on our learning platform policies:\n\n* **Supported Facts:** A submission is complete only when the platform displays a confirmation number [c-6038e1e547cd4b58]. If you do not see a confirmation number, your submission is not yet complete. You should retain a local copy of your submitted work [c-6038e1e547cd4b58]. \n* **Unknown Details:** The provided records do not contain specific troubleshooting steps for missing confirmation numbers beyond general page-loading advice (refresh once, sign out and back in, and try a supported browser) [c-6038e1e547cd4b58]. Furthermore, our assistants cannot inspect uploads or retrieve confirmation numbers [c-6038e1e547cd4b58]."
+    },
+    {
+      "id": "hammered-d22",
+      "category": "policy_with_my",
+      "question": "How do I get accommodations for my exam?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "grading.md",
+        "learning-platform.md",
+        "student-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1528.1,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! Here is the policy regarding exam and disability accommodations:\n\n* Students requesting disability accommodations should contact the institution before the relevant course begins [c-aa2a332549859ebf]. \n* Approved accommodations may alter how an assessment is delivered, but they do not automatically change learning outcomes, grading weights, or certificate requirements [c-aa2a332549859ebf]. \n* You must not submit medical documents to the demo assistant [c-aa2a332549859ebf].\n\nPlease note that this fictional demo does not have a live adviser directory, appointment system, working email address, or telephone number, and the assistant cannot create support cases or book appointments [c-aa2a332549859ebf]."
+    },
+    {
+      "id": "hammered-d23",
+      "category": "followup",
+      "question": "how much is it?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1064.8,
+      "suggested_questions": [
+        "How is the final grade calculated?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d24",
+      "category": "followup",
+      "question": "and what are the prerequisites?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "certificates-records.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1011.5,
+      "suggested_questions": [
+        "What does the Product Foundations Certificate require?",
+        "What can you help me with?",
+        "How is the final grade calculated?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d25",
+      "category": "followup",
+      "question": "how long do I have to accept?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "calendar-fees.md",
+        "certificates-records.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 25604.0,
+      "suggested_questions": [],
+      "answer": "Students have 48 hours to accept the offer if notified that a seat becomes available from the waiting list [c-bd79c4e6b1b442d2]."
+    },
+    {
+      "id": "hammered-d26",
+      "category": "ambiguity",
+      "question": "How long?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "clarification",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.5,
+      "suggested_questions": [
+        "How is the final grade calculated?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "Which topic or item do you mean? For example, you can ask about University overview and assistant limits, Courses, Enrollment, Calendar, tuition, and withdrawals."
+    },
+    {
+      "id": "hammered-d27",
+      "category": "ambiguity",
+      "question": "what about the other one",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "certificates-records.md",
+        "grading.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 33.9,
+      "suggested_questions": [
+        "What does the Product Foundations Certificate require?",
+        "What can you help me with?",
+        "How is the final grade calculated?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with University overview and assistant limits, Courses, Enrollment. Try asking: \u201cWhat does the Product Foundations Certificate require?\u201d."
+    },
+    {
+      "id": "hammered-d28",
+      "category": "topic_switch",
+      "question": "what are the grade bands",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 24317.9,
+      "suggested_questions": [],
+      "answer": "Based on Hammered University's grading rules, the grade bands are:\n\n* **A:** 90\u2013100 [c-efa6faa4f55de998]\n* **B:** 80\u201389.99 [c-efa6faa4f55de998]\n* **C:** 70\u201379.99 [c-efa6faa4f55de998]\n* **D:** 60\u201369.99 [c-efa6faa4f55de998]\n* **F:** Below 60 [c-efa6faa4f55de998]"
+    },
+    {
+      "id": "hammered-d29",
+      "category": "topic_switch",
+      "question": "Is there a student housing option?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "enrollment.md",
+        "learning-platform.md",
+        "student-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1295.5,
+      "suggested_questions": [
+        "How is the final grade calculated?",
+        "Can you check whether a course has seats available now?",
+        "What can you tell me about University overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Student support and accommodations, Courses."
+    },
+    {
+      "id": "hammered-d30",
+      "category": "count_list",
+      "question": "How many courses are offered?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1223.2,
+      "suggested_questions": [
+        "How is the final grade calculated?",
+        "What can you tell me about University overview and assistant limits?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Courses, Enrollment."
+    },
+    {
+      "id": "hammered-d31",
+      "category": "count_list",
+      "question": "list all the courses",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "courses.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1368.7,
+      "suggested_questions": [
+        "What does the Product Foundations Certificate require?",
+        "How is the final grade calculated?",
+        "What can you tell me about Courses?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Courses, University overview and assistant limits, Enrollment."
+    },
+    {
+      "id": "hammered-d32",
+      "category": "count_list",
+      "question": "How many credits does the certificate need in total?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "calendar-fees.md",
+        "enrollment.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1583.2,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University! \n\nThe Product Foundations Certificate requires a total of 12 credits (consisting of courses PF101, DA110, UX120, and PL201) [c-bd79c4e6b1b442d2]."
+    },
+    {
+      "id": "hammered-d33",
+      "category": "count_list",
+      "question": "What are all the important dates this term?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "certificates-records.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 23139.0,
+      "suggested_questions": [
+        "What does the Product Foundations Certificate require?",
+        "What can you help me with?",
+        "How is the final grade calculated?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about University overview and assistant limits, Calendar, tuition, and withdrawals, Courses."
+    },
+    {
+      "id": "hammered-d34",
+      "category": "unsupported",
+      "question": "Is Hammered University accredited?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "calendar-fees.md",
+        "courses.md",
+        "grading.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1301.4,
+      "suggested_questions": [],
+      "answer": "Welcome to Hammered University\u2014\"The world's most prestigious university\" [c-9dc569f7b69e444e]! \n\nRegarding your question, Hammered University has no claimed accreditation, ranking, or affiliation with a real institution, as it is a fictional institution created for a demo [c-9dc569f7b69e444e]. No real admissions, tuition payments, or qualifications are offered [c-9dc569f7b69e444e]."
+    },
+    {
+      "id": "hammered-d35",
+      "category": "unsupported",
+      "question": "Do you offer scholarships?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "calendar-fees.md",
+        "courses.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1388.6,
+      "suggested_questions": [],
+      "answer": "This dataset does not specify scholarships [c-fdfddfcd1e74248c]."
+    },
+    {
+      "id": "hammered-d36",
+      "category": "unsupported",
+      "question": "What's the weather going to be tomorrow?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "live_data",
+      "retrieved": [
+        "calendar-fees.md",
+        "certificates-records.md",
+        "enrollment.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.9,
+      "suggested_questions": [
+        "What does the Product Foundations Certificate require?",
+        "How is the final grade calculated?",
+        "When will my digital certificate be available?"
+      ],
+      "answer": "I can\u2019t check live weather or forecasts. I can only use the information provided in this workspace, but I can still help with University overview and assistant limits, Courses, or Enrollment."
+    },
+    {
+      "id": "hammered-d37",
+      "category": "small_talk",
+      "question": "thank you so much",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "enrollment.md",
+        "learning-platform.md",
+        "student-support.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 22.3,
+      "suggested_questions": [
+        "What can you help me with?",
+        "Can you check whether a course has seats available now?",
+        "What can you tell me about University overview and assistant limits?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with University overview and assistant limits, Courses, Enrollment. Try asking: \u201cWhat can you help me with?\u201d."
+    },
+    {
+      "id": "hammered-d38",
+      "category": "small_talk",
+      "question": "what can you tell me about?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "capability",
+      "retrieved": [],
+      "provider_calls": 0,
+      "latency_ms": 0.2,
+      "suggested_questions": [],
+      "answer": "I\u2019m Hammered University. I have information across 8 topics:\n- University overview and assistant limits \u2014 What this fictional university offers and which live student records are unavailable.\n- Courses \u2014 Course content, prerequisites, schedules, recordings, and study expectations.\n- Enrollment \u2014 Certificate requirements, course loads, deadlines, prerequisites, and wait lists.\n- Calendar, tuition, and withdrawals \u2014 Term dates, fees, payment deadlines, add/drop rules, and refunds.\n- Grading \u2014 Grade bands, weighted scores, passing requirements, and retakes.\n- Student support and accommodations \u2014 Advising boundaries, disability accommodations, and unavailable live support channels.\n- Learning platform \u2014 Supported browsers, assignment uploads, confirmation numbers, and troubleshooting.\n- Certificates and records \u2014 Completion requirements, digital certificates, grade summaries, and transcript limits.\n\nTry asking:\n- \u201cWhat can you help me with?\u201d\n- \u201cWhat does the Product Foundations Certificate require?\u201d\n- \u201cWhen does Spring 2027 enrollment close?\u201d\n- \u201cHow is the final grade calculated?\u201d"
+    }
+  ]
+}

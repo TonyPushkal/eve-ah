@@ -1,0 +1,573 @@
+{
+  "kind": "conversation_end_to_end",
+  "cases": 25,
+  "passed": 8,
+  "pass_rate": 0.32,
+  "categories": {
+    "paraphrase": {
+      "cases": 5,
+      "passed": 2
+    },
+    "personal_record": {
+      "cases": 4,
+      "passed": 0
+    },
+    "action": {
+      "cases": 2,
+      "passed": 0
+    },
+    "policy_with_my": {
+      "cases": 2,
+      "passed": 1
+    },
+    "followup": {
+      "cases": 2,
+      "passed": 1
+    },
+    "ambiguity": {
+      "cases": 2,
+      "passed": 1
+    },
+    "topic_switch": {
+      "cases": 1,
+      "passed": 1
+    },
+    "count_list": {
+      "cases": 3,
+      "passed": 1
+    },
+    "unsupported": {
+      "cases": 2,
+      "passed": 1
+    },
+    "small_talk": {
+      "cases": 2,
+      "passed": 0
+    }
+  },
+  "avg_provider_calls": 0.64,
+  "results": [
+    {
+      "id": "amaze-on-h01",
+      "category": "paraphrase",
+      "question": "how much for the NameTag luggage tag?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "products.md",
+        "shipping.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1312.4,
+      "suggested_questions": [],
+      "answer": "Hello! I am Amaze-on. \n\nThe NameTag personalized luggage tag costs $12 [c-317e41ec6c3b07e3]."
+    },
+    {
+      "id": "amaze-on-h02",
+      "category": "paraphrase",
+      "question": "whats the cutoff time for same-day dispatch",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "accounts-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1289.6,
+      "suggested_questions": [
+        "Does the GlowDesk warranty cover liquid damage?",
+        "What can you tell me about Product care and troubleshooting?",
+        "What can you tell me about Store overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Product care and troubleshooting, Store overview and assistant limits, Shipping."
+    },
+    {
+      "id": "amaze-on-h03",
+      "category": "paraphrase",
+      "question": "can i get my money back if the engraving is wrong",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "product-care.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1310.6,
+      "suggested_questions": [],
+      "answer": "Yes, a personalized NameTag with an engraving that differs from the submitted text qualifies for a refund (or replacement) after review [c-b5a96c7818097253]. However, a spelling error in text that was correctly supplied by the buyer does not qualify under the engraving-error policy [c-b5a96c7818097253]. \n\nApproved refunds are sent to the original payment method within 5 business days after inspection [c-b5a96c7818097253]. Please note that the assistant cannot approve or process a return [c-26a231043f47e61b], decide warranty outcomes, or submit claims [c-8bcf4a8f6f6a2908]."
+    },
+    {
+      "id": "amaze-on-h04",
+      "category": "paraphrase",
+      "question": "does the water bottle go in the dishwasher?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "product-care.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1152.7,
+      "suggested_questions": [
+        "Does the GlowDesk warranty cover liquid damage?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Product care and troubleshooting?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Store overview and assistant limits, Product care and troubleshooting, Products."
+    },
+    {
+      "id": "amaze-on-h05",
+      "category": "paraphrase",
+      "question": "Do you take cash on delivery?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [],
+      "provider_calls": 1,
+      "latency_ms": 1485.1,
+      "suggested_questions": [
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "What products can you tell me about?",
+        "Can you check where my order is right now?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Shipping, Store overview and assistant limits, Products."
+    },
+    {
+      "id": "amaze-on-h06",
+      "category": "personal_record",
+      "question": "pull up my recent orders please",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "accounts-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1030.0,
+      "suggested_questions": [
+        "Can you check where my order is right now?",
+        "What can you tell me about Orders and payments?",
+        "What can you tell me about Store overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Orders and payments, Store overview and assistant limits, Products."
+    },
+    {
+      "id": "amaze-on-h07",
+      "category": "personal_record",
+      "question": "is my parcel out for delivery",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "shipping.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1134.2,
+      "suggested_questions": [
+        "Can you check where my order is right now?",
+        "When is standard shipping free?",
+        "What can you tell me about Shipping?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Shipping, Product care and troubleshooting, Store overview and assistant limits."
+    },
+    {
+      "id": "amaze-on-h08",
+      "category": "personal_record",
+      "question": "did my payment go through",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "accounts-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1140.0,
+      "suggested_questions": [
+        "Can you check where my order is right now?",
+        "What can you tell me about Orders and payments?",
+        "What can you tell me about Store overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Orders and payments, Store overview and assistant limits, Products."
+    },
+    {
+      "id": "amaze-on-h09",
+      "category": "personal_record",
+      "question": "I need to know when my stuff will arrive",
+      "passed": false,
+      "reasons": [
+        "outcome=answer"
+      ],
+      "outcome": "answer",
+      "retrieved": [
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1599.7,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on, where your satisfaction is our absolute top priority! \n\nRegarding when your items will arrive, the estimated delivery times depend on the shipping method selected after dispatch [c-d5800f31a5026138]:\n* **Standard delivery:** Takes 3\u20135 business days after dispatch [c-d5800f31a5026138].\n* **Express delivery:** Takes 1\u20132 business days after dispatch [c-d5800f31a5026138].\n\nPlease note that these are estimates rather than guarantees [c-d5800f31a5026138]. Furthermore, if your order includes a personalized product like a NameTag, there is an additional production time of 3 business days before dispatch, and express shipping speeds up transit rather than production time [c-d5800f31a5026138]. \n\nAs for exact arrival dates and tracking, the assistant does not have access to dispatch information, a holiday calendar, or tracking details to provide a specific arrival date [c-d5800f31a5026138]."
+    },
+    {
+      "id": "amaze-on-h10",
+      "category": "action",
+      "question": "can you refund me for the broken cup",
+      "passed": false,
+      "reasons": [
+        "unanswerable_suggestion"
+      ],
+      "outcome": "action",
+      "retrieved": [
+        "products.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.8,
+      "suggested_questions": [
+        "What products can you tell me about?",
+        "Can you check where my order is right now?",
+        "Can I return a personalized item if it arrives damaged?"
+      ],
+      "answer": "I can\u2019t issue refunds. I can still help with Product care and troubleshooting, Store overview and assistant limits, or Returns and refunds. I can also help you prepare what you need. What would you like to know?"
+    },
+    {
+      "id": "amaze-on-h11",
+      "category": "action",
+      "question": "could you email me a copy of my receipt",
+      "passed": false,
+      "reasons": [
+        "unanswerable_suggestion"
+      ],
+      "outcome": "action",
+      "retrieved": [
+        "products.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.8,
+      "suggested_questions": [
+        "What products can you tell me about?",
+        "Can you check where my order is right now?",
+        "Can I return a personalized item if it arrives damaged?"
+      ],
+      "answer": "I can\u2019t perform actions in external systems. I can still help with Store overview and assistant limits, Products, or Shipping. I can also help you prepare what you need. What would you like to know?"
+    },
+    {
+      "id": "amaze-on-h12",
+      "category": "policy_with_my",
+      "question": "If my TrailPack arrives damaged, who pays return postage?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1815.5,
+      "suggested_questions": [],
+      "answer": "Amaze-on pays return postage for confirmed damaged items [c-26a231043f47e61b]."
+    },
+    {
+      "id": "amaze-on-h13",
+      "category": "policy_with_my",
+      "question": "Can I change my shipping address once my order has been dispatched?",
+      "passed": false,
+      "reasons": [
+        "outcome=live_data",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "live_data",
+      "retrieved": [],
+      "provider_calls": 0,
+      "latency_ms": 0.7,
+      "suggested_questions": [
+        "Can you check where my order is right now?",
+        "Can I return a personalized item if it arrives damaged?",
+        "What products can you tell me about?"
+      ],
+      "answer": "I can\u2019t check live order, delivery, or payment status. I can only use the information provided in this workspace, but I can still help with Shipping, Orders and payments, or Store overview and assistant limits."
+    },
+    {
+      "id": "amaze-on-h14",
+      "category": "followup",
+      "question": "what about the bag?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "accounts-support.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1527.4,
+      "suggested_questions": [
+        "What products can you tell me about?",
+        "Does the GlowDesk warranty cover liquid damage?",
+        "What can you tell me about Store overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Store overview and assistant limits, Product care and troubleshooting, Products."
+    },
+    {
+      "id": "amaze-on-h15",
+      "category": "followup",
+      "question": "is that free?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1519.9,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on, where our delivery speeds are simply breathtaking! \n\nRegarding your question about whether express delivery is free:\n* **Express shipping cost:** Express shipping costs $12 at every subtotal [c-467c12bff98d6cff]. The free-standard-shipping offer does not waive express fees [c-467c12bff98d6cff]. \n* **Express transit speed:** Express delivery takes 1\u20132 business days after dispatch [c-d5800f31a5026138]."
+    },
+    {
+      "id": "amaze-on-h16",
+      "category": "ambiguity",
+      "question": "how much does it cost",
+      "passed": true,
+      "reasons": [],
+      "outcome": "clarification",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 0.5,
+      "suggested_questions": [
+        "Can I return a personalized item if it arrives damaged?",
+        "Does the GlowDesk warranty cover liquid damage?",
+        "How do I troubleshoot a GlowDesk that will not turn on?"
+      ],
+      "answer": "Which topic or item do you mean? For example, you can ask about Store overview and assistant limits, Products, Shipping, Returns and refunds."
+    },
+    {
+      "id": "amaze-on-h17",
+      "category": "ambiguity",
+      "question": "and when?",
+      "passed": false,
+      "reasons": [
+        "unanswerable_suggestion"
+      ],
+      "outcome": "clarification",
+      "retrieved": [],
+      "provider_calls": 0,
+      "latency_ms": 0.4,
+      "suggested_questions": [
+        "When is standard shipping free?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Products?"
+      ],
+      "answer": "Which topic or item do you mean? For example, you can ask about Store overview and assistant limits, Products, Shipping, Returns and refunds."
+    },
+    {
+      "id": "amaze-on-h18",
+      "category": "topic_switch",
+      "question": "what cards do you accept",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "orders-payments.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 2155.7,
+      "suggested_questions": [],
+      "answer": "Hello! I'm Amaze-on, here to help you shop with ease! \n\nWe accept Visa, Mastercard, and fictional MallCredit at checkout [c-0229aadd2e336a2b]. Cash, bank transfers, cryptocurrency, and payment on delivery are not supported [c-0229aadd2e336a2b]."
+    },
+    {
+      "id": "amaze-on-h19",
+      "category": "count_list",
+      "question": "How many items are in your catalog?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [],
+      "provider_calls": 0,
+      "latency_ms": 24.3,
+      "suggested_questions": [
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Products?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with Store overview and assistant limits, Products, Shipping. Try asking: \u201cHow do I troubleshoot a GlowDesk that will not turn on?\u201d."
+    },
+    {
+      "id": "amaze-on-h20",
+      "category": "count_list",
+      "question": "what are all the shipping options",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1219.3,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on! Here are the available shipping options:\n\n* **Standard domestic shipping:** Costs $5 for a merchandise subtotal below $50, and is free at $50 or more (calculated using the subtotal after discounts and before tax or shipping) [c-467c12bff98d6cff].\n* **Express shipping:** Costs $12 at every subtotal, and the free standard shipping offer does not waive express fees [c-467c12bff98d6cff].\n\nPlease note that international shipping details are unavailable [c-9c8e3f2f2b2c18e8]."
+    },
+    {
+      "id": "amaze-on-h21",
+      "category": "count_list",
+      "question": "How many days is the standard return window and how many for damaged items?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "accounts-support.md",
+        "product-care.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1396.1,
+      "suggested_questions": [
+        "When is standard shipping free?",
+        "Can I return a personalized item if it arrives damaged?",
+        "Does the GlowDesk warranty cover liquid damage?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Returns and refunds, Product care and troubleshooting, Store overview and assistant limits."
+    },
+    {
+      "id": "amaze-on-h22",
+      "category": "unsupported",
+      "question": "Do you price match other stores?",
+      "passed": false,
+      "reasons": [
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1266.4,
+      "suggested_questions": [
+        "What products can you tell me about?",
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "Can you check where my order is right now?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Store overview and assistant limits, Products, Shipping."
+    },
+    {
+      "id": "amaze-on-h23",
+      "category": "unsupported",
+      "question": "What's the capital of Australia?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "product-care.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 20.5,
+      "suggested_questions": [
+        "Does the GlowDesk warranty cover liquid damage?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Product care and troubleshooting?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with Store overview and assistant limits, Product care and troubleshooting, Products. Try asking: \u201cDoes the GlowDesk warranty cover liquid damage?\u201d."
+    },
+    {
+      "id": "amaze-on-h24",
+      "category": "small_talk",
+      "question": "ok bye",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "shipping.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 20.3,
+      "suggested_questions": [
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Products?",
+        "What can you tell me about Shipping?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with Store overview and assistant limits, Products, Shipping. Try asking: \u201cWhat can you tell me about Store overview and assistant limits?\u201d."
+    },
+    {
+      "id": "amaze-on-h25",
+      "category": "small_talk",
+      "question": "what do you know about?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain",
+        "unanswerable_suggestion"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 0,
+      "latency_ms": 24.7,
+      "suggested_questions": [
+        "What products can you tell me about?",
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "Can you check where my order is right now?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with Store overview and assistant limits, Products, Shipping. Try asking: \u201cWhat products can you tell me about?\u201d."
+    }
+  ]
+}

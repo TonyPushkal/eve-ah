@@ -1,0 +1,625 @@
+{
+  "kind": "conversation_end_to_end",
+  "cases": 40,
+  "passed": 22,
+  "pass_rate": 0.55,
+  "categories": {
+    "paraphrase": {
+      "cases": 10,
+      "passed": 6
+    },
+    "personal_record": {
+      "cases": 7,
+      "passed": 1
+    },
+    "action": {
+      "cases": 3,
+      "passed": 2
+    },
+    "policy_with_my": {
+      "cases": 4,
+      "passed": 3
+    },
+    "followup": {
+      "cases": 3,
+      "passed": 2
+    },
+    "ambiguity": {
+      "cases": 2,
+      "passed": 2
+    },
+    "topic_switch": {
+      "cases": 2,
+      "passed": 0
+    },
+    "count_list": {
+      "cases": 4,
+      "passed": 1
+    },
+    "unsupported": {
+      "cases": 3,
+      "passed": 3
+    },
+    "small_talk": {
+      "cases": 2,
+      "passed": 2
+    }
+  },
+  "avg_provider_calls": 1.1,
+  "results": [
+    {
+      "id": "amaze-on-d01",
+      "category": "paraphrase",
+      "question": "whats the price of the cloudcup",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "products.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2345.0,
+      "suggested_questions": [],
+      "answer": "Hello! Welcome to Amaze-on, where every shopping experience is simply *astounding*! \n\nThe CloudCup insulated bottle costs $24 [c-648b8631dc998a81]. (Please note that our list prices are fictional, and current stock and tax information are unavailable [c-648b8631dc998a81].)"
+    },
+    {
+      "id": "amaze-on-d02",
+      "category": "paraphrase",
+      "question": "do i get free shipping if i spend 60 bucks",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2323.1,
+      "suggested_questions": [],
+      "answer": "Yes! Standard domestic shipping is free when your merchandise subtotal is $50 or more [c-467c12bff98d6cff]. The threshold is based on the subtotal after discounts and before tax or shipping [c-467c12bff98d6cff]."
+    },
+    {
+      "id": "amaze-on-d03",
+      "category": "paraphrase",
+      "question": "how many days do I have to send something back",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "products.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 3079.8,
+      "suggested_questions": [
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "What should I do if my order has not arrived?",
+        "Can I return a personalized item if it arrives damaged?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Store overview and assistant limits, Products, Shipping."
+    },
+    {
+      "id": "amaze-on-d04",
+      "category": "paraphrase",
+      "question": "will the lamp work without being plugged in",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "products.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 1995.1,
+      "suggested_questions": [],
+      "answer": "No, the GlowDesk task lamp has no battery and must remain connected to power to work [c-648b8631dc998a81]."
+    },
+    {
+      "id": "amaze-on-d05",
+      "category": "paraphrase",
+      "question": "what payment options do you take",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "orders-payments.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 1963.1,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on! We accept Visa, Mastercard, and fictional MallCredit at checkout [c-0229aadd2e336a2b]. Cash, bank transfers, cryptocurrency, and payment on delivery are not supported [c-0229aadd2e336a2b]."
+    },
+    {
+      "id": "amaze-on-d06",
+      "category": "paraphrase",
+      "question": "how soon does express arrive",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 1841.3,
+      "suggested_questions": [],
+      "answer": "Express delivery takes 1\u20132 business days after dispatch [c-d5800f31a5026138]. This is an estimate, not a guarantee [c-d5800f31a5026138]."
+    },
+    {
+      "id": "amaze-on-d07",
+      "category": "paraphrase",
+      "question": "is the bag ok in a washing machine",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "accounts-support.md",
+        "product-care.md",
+        "warranty.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2376.5,
+      "suggested_questions": [
+        "When is standard shipping free?",
+        "Can I return a personalized item if it arrives damaged?",
+        "Does the GlowDesk warranty cover liquid damage?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Store overview and assistant limits, Product care and troubleshooting, Products."
+    },
+    {
+      "id": "amaze-on-d08",
+      "category": "paraphrase",
+      "question": "what's the warranty on the lamp",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "product-care.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2454.4,
+      "suggested_questions": [],
+      "answer": "Hello! I am Amaze-on, here to help you understand our policies clearly and concisely.\n\nRegarding the GlowDesk lamp, it comes with a 12-month warranty from delivery that covers manufacturing defects under normal indoor use [c-bcf140b5ded5b46b]. \n\nHere are the key details supported by our policy:\n* **Exclusions:** The warranty excludes liquid damage, accidental drops, misuse, and unauthorized modifications [c-bcf140b5ded5b46b]. Opening the lamp housing also voids the warranty coverage [c-b12dea7b144f36ea].\n* **Special Cases:** If a lamp fails after 8 months of normal indoor use, it *may* qualify for coverage after support reviews the defect, but eligibility is not automatic [c-bcf140b5ded5b46b].\n* **Claims:** Making a claim requires the order number and a description of the fault for support to review [c-8bcf4a8f6f6a2908]."
+    },
+    {
+      "id": "amaze-on-d09",
+      "question": "can I use two promo codes on one order",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d10",
+      "question": "once a refund is approved how long till I get the money",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d11",
+      "question": "find my orders",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d12",
+      "question": "can you check on my order",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d13",
+      "question": "where is my package right now",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d14",
+      "category": "personal_record",
+      "question": "has my order shipped yet",
+      "passed": true,
+      "reasons": [],
+      "outcome": "live_data",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 2544.3,
+      "suggested_questions": [
+        "What should I do if my order has not arrived?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Products?"
+      ],
+      "answer": "I can\u2019t check live order, delivery, or payment status. I can only use the information provided in this workspace, but I can still help with Store overview and assistant limits, Products, or Shipping."
+    },
+    {
+      "id": "amaze-on-d15",
+      "question": "show me my purchase history",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d16",
+      "question": "what's the status of my refund",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d17",
+      "category": "personal_record",
+      "question": "look up my account details",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "accounts-support.md",
+        "orders-payments.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 4204.6,
+      "suggested_questions": [
+        "What should I do if my order has not arrived?",
+        "What can you tell me about Accounts and support?",
+        "What can you tell me about Store overview and assistant limits?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Accounts and support, Store overview and assistant limits, Products."
+    },
+    {
+      "id": "amaze-on-d18",
+      "category": "action",
+      "question": "cancel my order",
+      "passed": true,
+      "reasons": [],
+      "outcome": "action",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1083.1,
+      "suggested_questions": [
+        "What should I do if my order has not arrived?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Products?"
+      ],
+      "answer": "I can\u2019t cancel your order. I can only use the information provided in this workspace, but I can still help with Store overview and assistant limits, Products, or Shipping."
+    },
+    {
+      "id": "amaze-on-d19",
+      "category": "action",
+      "question": "please change my delivery address to 12 Elm Street",
+      "passed": true,
+      "reasons": [],
+      "outcome": "action",
+      "retrieved": [
+        "about.md",
+        "accounts-support.md",
+        "orders-payments.md",
+        "returns.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 966.7,
+      "suggested_questions": [
+        "What should I do if my order has not arrived?",
+        "What can you tell me about Shipping?",
+        "What can you tell me about Orders and payments?"
+      ],
+      "answer": "I can\u2019t change your delivery address. I can only use the information provided in this workspace, but I can still help with Shipping, Orders and payments, or Store overview and assistant limits."
+    },
+    {
+      "id": "amaze-on-d20",
+      "category": "action",
+      "question": "I want to return the lamp I bought, can you set that up for me",
+      "passed": false,
+      "reasons": [
+        "outcome=answer"
+      ],
+      "outcome": "answer",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 4009.3,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on! \n\nRegarding your return request, the assistant cannot approve or process a return [c-26a231043f47e61b]. \n\nHere are the details from our standard returns and warranty policies:\n* **Standard Returns:** Unused, non-personalized products may be returned within 30 calendar days of delivery if they include the order number, original packaging, and all accessories [c-26a231043f47e61b]. For change-of-mind returns, the customer pays return postage and original shipping charges are not refunded [c-26a231043f47e61b].\n* **Damaged or Wrong Products:** If a product arrived damaged or is the wrong item, it must be reported within 7 calendar days of delivery [c-26a231043f47e61b]. \n* **Warranty:** GlowDesk lamps have a 12-month warranty against manufacturing defects under normal indoor use [c-bcf140b5ded5b46b]. If your lamp fails to turn on, troubleshooting steps include confirming the USB-C cable is connected to a powered wall adapter (which is not included) and disconnecting power for 30 seconds before reconnecting [c-b12dea7b144f36ea]. If troubleshooting fails, the assistant can explain the warranty but cannot create a claim [c-b12dea7b144f36ea].\n\nCurrent stock and tax are not available [c-648b8631dc998a81]."
+    },
+    {
+      "id": "amaze-on-d21",
+      "category": "policy_with_my",
+      "question": "How do I cancel my order before it ships?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md",
+        "warranty.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2431.3,
+      "suggested_questions": [],
+      "answer": "To cancel your order, you can request a cancellation before dispatch [c-0229aadd2e336a2b]. However, please note that the assistant cannot make a cancellation or address correction, and cannot see an order's current state [c-0229aadd2e336a2b]. After dispatch, cancellation is no longer available, and the published return policy applies after delivery [c-0229aadd2e336a2b]."
+    },
+    {
+      "id": "amaze-on-d22",
+      "category": "policy_with_my",
+      "question": "What happens to my address if I try to change it after dispatch?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "accounts-support.md",
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2187.1,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on! \n\nAfter dispatch, the delivery address cannot be changed [c-0229aadd2e336a2b]."
+    },
+    {
+      "id": "amaze-on-d23",
+      "category": "policy_with_my",
+      "question": "My package hasn't arrived, what should I do?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "product-care.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2158.3,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on! If an order has not arrived 2 business days after the latest estimated delivery day, you should ask support to investigate [c-d5800f31a5026138]. \n\nHowever, please note that exact arrival dates require dispatch information and a holiday calendar, which are currently unavailable, and this demo cannot check tracking or submit the request [c-d5800f31a5026138]. Additionally, this demo has no working portal or contact destination [c-9c8e3f2f2b2c18e8]."
+    },
+    {
+      "id": "amaze-on-d24",
+      "category": "policy_with_my",
+      "question": "Can I return my order if I just changed my mind?",
+      "passed": false,
+      "reasons": [
+        "outcome=abstain"
+      ],
+      "outcome": "abstain",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "warranty.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2581.2,
+      "suggested_questions": [
+        "Can I return a personalized item if it arrives damaged?",
+        "What should I do if my order has not arrived?",
+        "What products can you tell me about?"
+      ],
+      "answer": "I found related information, but not enough detail to answer that safely. Try a more specific question about Returns and refunds, Store overview and assistant limits, Products."
+    },
+    {
+      "id": "amaze-on-d25",
+      "category": "followup",
+      "question": "does it have a battery?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "warranty.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2290.1,
+      "suggested_questions": [],
+      "answer": "GlowDesk has no battery and must remain connected to power [c-648b8631dc998a81]."
+    },
+    {
+      "id": "amaze-on-d26",
+      "category": "followup",
+      "question": "and express?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2277.5,
+      "suggested_questions": [],
+      "answer": "Welcome to Amaze-on! Express shipping costs $12 at every subtotal, and the free-standard-shipping offer does not waive express fees [c-467c12bff98d6cff]."
+    },
+    {
+      "id": "amaze-on-d27",
+      "question": "how long do I have to do that?",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d28",
+      "category": "ambiguity",
+      "question": "How long?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "clarification",
+      "retrieved": [
+        "product-care.md",
+        "products.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 2456.7,
+      "suggested_questions": [
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Products?"
+      ],
+      "answer": "Which topic or item do you mean? For example, you can ask about Store overview and assistant limits, Products, Shipping, Returns and refunds."
+    },
+    {
+      "id": "amaze-on-d29",
+      "category": "ambiguity",
+      "question": "what about that one",
+      "passed": true,
+      "reasons": [],
+      "outcome": "clarification",
+      "retrieved": [
+        "about.md",
+        "product-care.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 2502.1,
+      "suggested_questions": [
+        "What products can you tell me about?",
+        "How do I troubleshoot a GlowDesk that will not turn on?",
+        "What should I do if my order has not arrived?"
+      ],
+      "answer": "Which topic or item do you mean? For example, you can ask about Store overview and assistant limits, Products, Shipping, Returns and refunds."
+    },
+    {
+      "id": "amaze-on-d30",
+      "question": "how long does standard delivery take",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d31",
+      "question": "What is Amaze-on?",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d32",
+      "question": "How many products are listed?",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d33",
+      "question": "how many products do you sell",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d34",
+      "question": "List all the products and their prices",
+      "error": "provider_busy"
+    },
+    {
+      "id": "amaze-on-d35",
+      "category": "count_list",
+      "question": "How many payment methods do you accept?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "orders-payments.md",
+        "returns.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 5804.2,
+      "suggested_questions": [],
+      "answer": "Amaze-on accepts three payment methods at checkout: Visa, Mastercard, and fictional MallCredit [c-0229aadd2e336a2b]. Cash, bank transfers, cryptocurrency, and payment on delivery are not supported [c-0229aadd2e336a2b]."
+    },
+    {
+      "id": "amaze-on-d36",
+      "category": "unsupported",
+      "question": "Do you ship internationally?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 3078.6,
+      "suggested_questions": [],
+      "answer": "Hello, I'm Amaze-on! \n\nInternational shipping is not specified in our policies, as they cover the fictional domestic delivery zone only [c-9c8e3f2f2b2c18e8]. Therefore, that detail is currently unavailable [c-9c8e3f2f2b2c18e8]."
+    },
+    {
+      "id": "amaze-on-d37",
+      "category": "unsupported",
+      "question": "Do you offer student discounts?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "answer",
+      "retrieved": [
+        "about.md",
+        "orders-payments.md",
+        "products.md",
+        "shipping.md"
+      ],
+      "provider_calls": 2,
+      "latency_ms": 2073.9,
+      "suggested_questions": [],
+      "answer": "Student discounts are not specified in our policies [c-9c8e3f2f2b2c18e8]."
+    },
+    {
+      "id": "amaze-on-d38",
+      "category": "unsupported",
+      "question": "Who won the football world cup?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "abstain",
+      "retrieved": [
+        "about.md",
+        "product-care.md",
+        "returns.md",
+        "warranty.md"
+      ],
+      "provider_calls": 1,
+      "latency_ms": 1188.2,
+      "suggested_questions": [
+        "Does the GlowDesk warranty cover liquid damage?",
+        "What can you tell me about Store overview and assistant limits?",
+        "What can you tell me about Product care and troubleshooting?"
+      ],
+      "answer": "That\u2019s outside the information available to me. I can help with Store overview and assistant limits, Product care and troubleshooting, Products. Try asking: \u201cDoes the GlowDesk warranty cover liquid damage?\u201d."
+    },
+    {
+      "id": "amaze-on-d39",
+      "category": "small_talk",
+      "question": "thanks!",
+      "passed": true,
+      "reasons": [],
+      "outcome": "small_talk",
+      "retrieved": [],
+      "provider_calls": 0,
+      "latency_ms": 0.2,
+      "suggested_questions": [],
+      "answer": "You\u2019re welcome. Ask me anytime about Store overview and assistant limits, Products, or Shipping."
+    },
+    {
+      "id": "amaze-on-d40",
+      "category": "small_talk",
+      "question": "hey, what can you help me with?",
+      "passed": true,
+      "reasons": [],
+      "outcome": "capability",
+      "retrieved": [],
+      "provider_calls": 0,
+      "latency_ms": 0.1,
+      "suggested_questions": [],
+      "answer": "I\u2019m Amaze-on. I have information across 8 topics:\n- Store overview and assistant limits \u2014 What this fictional shop contains and which live actions the assistant cannot perform.\n- Products \u2014 CloudCup, GlowDesk, TrailPack, and personalized NameTag specifications and prices.\n- Shipping \u2014 Standard and express fees, delivery estimates, dispatch, and tracking limitations.\n- Returns and refunds \u2014 Return windows, item condition, damaged deliveries, postage, and refund timing.\n- Warranty \u2014 Product warranty periods, manufacturing defects, exclusions, and claim limits.\n- Orders and payments \u2014 Payment methods, authorization and final charge timing, promotion codes, address changes, cancellations, and receipts.\n- Accounts and support \u2014 Guest checkout, account limitations, browser support, and unavailable live support channels.\n- Product care and troubleshooting \u2014 Safe care instructions and first troubleshooting steps for the fictional products.\n\nTry asking:\n- \u201cWhat products can you tell me about?\u201d\n- \u201cWhen is standard shipping free?\u201d\n- \u201cCan I return a personalized item if it arrives damaged?\u201d\n- \u201cDoes the GlowDesk warranty cover liquid damage?\u201d"
+    }
+  ]
+}
