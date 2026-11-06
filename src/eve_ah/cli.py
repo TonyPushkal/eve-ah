@@ -32,6 +32,13 @@ def main():
         "evaluate-answers", help="Generate an answer artifact for human quality review"
     )
     answer_evaluate.add_argument("dataset", type=Path)
+    conversations = sub.add_parser(
+        "evaluate-conversations", help="Measure routing and answers on conversation cases"
+    )
+    conversations.add_argument("dataset", type=Path)
+    conversations.add_argument(
+        "--offline", action="store_true", help="No provider calls: routing and retrieval only"
+    )
     args = parser.parse_args()
     try:
         settings = load_settings(args.root)
@@ -57,6 +64,12 @@ def main():
                 knowledge.load()
                 result = evaluate(knowledge, args.dataset, compare_modes=args.compare_modes)
                 print(json.dumps(result, indent=2))
+            elif args.command == "evaluate-conversations":
+                if not args.offline:
+                    settings.require_key()
+                knowledge.load()
+                result = asyncio.run(_evaluate_conversations(settings, knowledge, args))
+                print(json.dumps(result, indent=2))
             else:
                 settings.require_key()
                 knowledge.load()
@@ -75,6 +88,20 @@ def main():
             file=sys.stderr,
         )
         raise SystemExit(1) from None
+
+
+async def _evaluate_conversations(settings, knowledge, args):
+    from eve_ah.evaluation import evaluate_conversations
+    from eve_ah.providers import Provider
+
+    provider = None if args.offline else Provider(settings)
+    try:
+        return await evaluate_conversations(
+            settings, knowledge, provider, args.dataset, offline=args.offline
+        )
+    finally:
+        if provider:
+            await provider.aclose()
 
 
 async def _evaluate_answers(settings, knowledge, dataset):

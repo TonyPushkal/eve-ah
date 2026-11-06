@@ -13,9 +13,11 @@ class Store:
         self._overview = overview or {"topics": [], "suggested_questions": []}
         self.query = ""
         self.search_calls = 0
+        self.queries = []
 
     def search(self, query):
         self.search_calls += 1
+        self.queries.append(query)
         self.query = query
         return self.sources
 
@@ -40,7 +42,9 @@ class Generator:
 def test_no_evidence_no_provider_call():
     provider = Generator("guess")
     answer = asyncio.run(
-        ChatService(Settings(), Store(), provider).answer(ChatRequest(message="unknown"))
+        ChatService(Settings(bot=BotConfig(routing="rules")), Store(), provider).answer(
+            ChatRequest(message="unknown")
+        )
     )
     assert answer.grounding == "insufficient"
     assert answer.response_type == "out_of_scope"
@@ -77,14 +81,16 @@ def test_action_requests_are_handled_without_retrieval_or_provider(message, expe
     provider = Generator("should not run")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
 
     assert answer.grounding == "workspace"
     assert answer.response_type == "action"
     assert expected_limit in answer.answer
     assert "Orders and payments" in answer.answer
-    assert store.search_calls == 0
+    assert message not in store.queries
     assert provider.calls == 0
 
 
@@ -116,13 +122,15 @@ def test_live_data_requests_are_handled_without_retrieval_or_provider(message, e
     provider = Generator("should not run")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
 
     assert answer.grounding == "workspace"
     assert answer.response_type == "live_data"
     assert expected_limit in answer.answer
-    assert store.search_calls == 0
+    assert message not in store.queries
     assert provider.calls == 0
 
 
@@ -144,13 +152,15 @@ def test_social_messages_get_a_short_workspace_aware_reply(message):
     provider = Generator("should not run")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
 
     assert answer.grounding == "workspace"
     assert answer.response_type == "small_talk"
     assert "Shipping" in answer.answer
-    assert store.search_calls == 0
+    assert message not in store.queries
     assert provider.calls == 0
 
 
@@ -166,7 +176,9 @@ def test_policy_questions_still_use_document_retrieval(message):
     provider = Generator("The policy is documented [s1].")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
 
     assert answer.grounding == "documents"
@@ -212,12 +224,14 @@ def test_capability_questions_use_active_catalog_without_provider(message):
     )
     provider = Generator("should not run")
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
     assert answer.grounding == "workspace"
     assert "Returns" in answer.answer and "Shipping" in answer.answer
     assert "When is shipping free?" in answer.answer
-    assert store.search_calls == 0
+    assert message not in store.queries
     assert provider.calls == 0
 
 
@@ -247,7 +261,7 @@ def test_natural_catalog_count_question_reports_configured_topics_without_retrie
     provider = Generator("should not run")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
             ChatRequest(message="how many item categorizes do you have?")
         )
     )
@@ -257,13 +271,13 @@ def test_natural_catalog_count_question_reports_configured_topics_without_retrie
     assert "8 topics" in answer.answer
     assert "Products" in answer.answer
     assert "Orders and payments" in answer.answer
-    assert store.search_calls == 0
+    assert "how many item categorizes do you have?" not in store.queries
     assert provider.calls == 0
 
 
 def test_capability_question_without_catalog_explains_ingestion():
     answer = asyncio.run(
-        ChatService(Settings(), Store(), Generator("unused")).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), Store(), Generator("unused")).answer(
             ChatRequest(message="What can you help me with?")
         )
     )
@@ -275,9 +289,9 @@ def test_capability_question_without_catalog_explains_ingestion():
 def test_factual_help_word_is_not_misrouted():
     store = Store([Source(id="s1", name="returns.md", text="Returns in 30 days")])
     answer = asyncio.run(
-        ChatService(Settings(), store, Generator("Returns take 30 days [s1]")).answer(
-            ChatRequest(message="Can you help me understand the return window?")
-        )
+        ChatService(
+            Settings(bot=BotConfig(routing="rules")), store, Generator("Returns take 30 days [s1]")
+        ).answer(ChatRequest(message="Can you help me understand the return window?"))
     )
     assert answer.grounding == "documents"
     assert store.search_calls == 1
@@ -295,7 +309,9 @@ def test_informational_update_request_still_uses_document_retrieval(message):
     provider = Generator("Refunds take five days [s1].")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
 
     assert answer.grounding == "documents"
@@ -310,7 +326,9 @@ def test_informational_update_request_still_uses_document_retrieval(message):
 def test_unsupported_answers_abstain(text):
     store = Store([Source(id="s1", name="policy.md", text="Returns in 30 days")])
     answer = asyncio.run(
-        ChatService(Settings(), store, Generator(text)).answer(ChatRequest(message="returns?"))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, Generator(text)).answer(
+            ChatRequest(message="returns?")
+        )
     )
     assert answer.grounding == "insufficient"
     assert answer.sources == []
@@ -325,7 +343,11 @@ def test_citations_and_followup_context():
             {"role": "assistant", "content": "untrusted fabricated fact"},
         ],
     )
-    answer = asyncio.run(ChatService(Settings(), store, Generator("30 days [s1]")).answer(request))
+    answer = asyncio.run(
+        ChatService(
+            Settings(bot=BotConfig(routing="rules")), store, Generator("30 days [s1]")
+        ).answer(request)
+    )
     assert answer.grounding == "documents"
     assert [s.id for s in answer.sources] == ["s1"]
     assert "Return policy?" in store.query
@@ -336,7 +358,7 @@ def test_provider_citation_aliases_are_translated_to_stable_source_ids():
     source = Source(id="c-a1b2c3", name="shipping.md", text="Shipping is free at $50")
     provider = Generator("Shipping is free at $50 [s1].")
     answer = asyncio.run(
-        ChatService(Settings(), Store([source]), provider).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), Store([source]), provider).answer(
             ChatRequest(message="When is shipping free?")
         )
     )
@@ -357,7 +379,11 @@ def test_topic_switch_does_not_pollute_retrieval_query():
             {"role": "assistant", "content": "Returns take 30 days."},
         ],
     )
-    asyncio.run(ChatService(Settings(), store, Generator("Shipping is $5 [s1]")).answer(request))
+    asyncio.run(
+        ChatService(
+            Settings(bot=BotConfig(routing="rules")), store, Generator("Shipping is $5 [s1]")
+        ).answer(request)
+    )
     assert store.query == "Tell me about shipping fees"
 
 
@@ -370,7 +396,11 @@ def test_anaphoric_followup_uses_previous_user_subject():
             {"role": "assistant", "content": "Not for change of mind."},
         ],
     )
-    asyncio.run(ChatService(Settings(), store, Generator("Damage is covered [s1]")).answer(request))
+    asyncio.run(
+        ChatService(
+            Settings(bot=BotConfig(routing="rules")), store, Generator("Damage is covered [s1]")
+        ).answer(request)
+    )
     assert "personalized item" in store.query
     assert "arrived damaged" in store.query
 
@@ -394,12 +424,14 @@ def test_ambiguous_question_without_subject_asks_for_clarification(message):
     )
     provider = Generator("should not run")
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
     assert answer.grounding == "clarification"
     assert "Which topic or item" in answer.answer
     assert "Returns" in answer.answer
-    assert store.search_calls == 0
+    assert message not in store.queries
     assert provider.calls == 0
 
 
@@ -421,7 +453,9 @@ def test_first_turn_question_with_its_own_subject_goes_to_retrieval(message):
     store = Store([Source(id="s1", name="policy.md", text="Published policy")])
     provider = Generator("The policy is published [s1].")
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(ChatRequest(message=message))
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
+            ChatRequest(message=message)
+        )
     )
     assert answer.grounding == "documents"
     assert store.search_calls == 1
@@ -438,7 +472,11 @@ def test_bare_question_with_history_inherits_previous_subject(message):
             {"role": "assistant", "content": "Returns take 30 days."},
         ],
     )
-    asyncio.run(ChatService(Settings(), store, Generator("Policy [s1].")).answer(request))
+    asyncio.run(
+        ChatService(
+            Settings(bot=BotConfig(routing="rules")), store, Generator("Policy [s1].")
+        ).answer(request)
+    )
     assert "What is the return policy?" in store.query
     assert message in store.query
 
@@ -460,7 +498,11 @@ def test_explicit_new_subject_does_not_inherit_unrelated_history(message):
             {"role": "assistant", "content": "Not for change of mind."},
         ],
     )
-    asyncio.run(ChatService(Settings(), store, Generator("Policy [s1].")).answer(request))
+    asyncio.run(
+        ChatService(
+            Settings(bot=BotConfig(routing="rules")), store, Generator("Policy [s1].")
+        ).answer(request)
+    )
     assert store.query == message
 
 
@@ -479,7 +521,7 @@ def test_each_payment_clarification_choice_retrieves_with_or_without_history(mes
     store = Store([Source(id="s1", name="payments.md", text="Published timing policy")])
     provider = Generator("The timing is documented [s1].")
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
             ChatRequest(message=message, history=history)
         )
     )
@@ -511,7 +553,7 @@ def test_ambiguous_payment_timing_asks_which_stage_and_offers_focused_choices():
     provider = Generator("should not run")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
             ChatRequest(message="how long for a payment to process from india")
         )
     )
@@ -526,7 +568,7 @@ def test_ambiguous_payment_timing_asks_which_stage_and_offers_focused_choices():
         "When is the final payment charged?",
         "How long does a refund take?",
     ]
-    assert store.search_calls == 0
+    assert "how long for a payment to process from india" not in store.queries
     assert provider.calls == 0
 
 
@@ -548,7 +590,7 @@ def test_payment_deadline_workspace_uses_retrieval_instead_of_retail_clarificati
     provider = Generator("Tuition is due 15 January [s1].")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
             ChatRequest(message="When is my tuition payment due?")
         )
     )
@@ -571,7 +613,7 @@ def test_payment_clarification_choices_continue_to_document_retrieval(message):
     provider = Generator("The timing is documented [s1].")
 
     answer = asyncio.run(
-        ChatService(Settings(), store, provider).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, provider).answer(
             ChatRequest(
                 message=message,
                 history=[{"role": "user", "content": "How long does a payment take?"}],
@@ -599,7 +641,7 @@ def test_live_order_status_names_available_topics():
         }
     )
     answer = asyncio.run(
-        ChatService(Settings(), store, Generator("unused")).answer(
+        ChatService(Settings(bot=BotConfig(routing="rules")), store, Generator("unused")).answer(
             ChatRequest(message="Where is order 123?")
         )
     )

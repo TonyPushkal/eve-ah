@@ -1,0 +1,261 @@
+[
+ {
+  "category": "paraphrase",
+  "question": "what's the total tuition for the whole certificate",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md"
+  ],
+  "must": [
+   "1,?350"
+  ],
+  "id": "hammered-h01"
+ },
+ {
+  "category": "paraphrase",
+  "question": "when do classes kick off",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md"
+  ],
+  "must": [
+   "18 January"
+  ],
+  "id": "hammered-h02"
+ },
+ {
+  "category": "paraphrase",
+  "question": "how are final scores weighted",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "must": [
+   "40",
+   "20"
+  ],
+  "id": "hammered-h03"
+ },
+ {
+  "category": "paraphrase",
+  "question": "can I quit a class after the drop deadline and get my fees back",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md"
+  ],
+  "must": [
+   "no|not"
+  ],
+  "id": "hammered-h04"
+ },
+ {
+  "category": "paraphrase",
+  "question": "which browsers work with the learning site",
+  "expect": "answer",
+  "sources": [
+   "learning-platform.md"
+  ],
+  "must": [
+   "chrome"
+  ],
+  "id": "hammered-h05"
+ },
+ {
+  "category": "personal_record",
+  "question": "look up my enrollment status",
+  "expect": "live_data",
+  "id": "hammered-h06"
+ },
+ {
+  "category": "personal_record",
+  "question": "what grade did I get on my project",
+  "expect": "live_data",
+  "id": "hammered-h07"
+ },
+ {
+  "category": "personal_record",
+  "question": "is my certificate ready yet",
+  "expect": "live_data",
+  "id": "hammered-h08"
+ },
+ {
+  "category": "personal_record",
+  "question": "is the learning platform down at the moment",
+  "expect": "live_data",
+  "id": "hammered-h09"
+ },
+ {
+  "category": "action",
+  "question": "submit my application for me",
+  "expect": "action",
+  "id": "hammered-h10"
+ },
+ {
+  "category": "action",
+  "question": "can you extend my assignment deadline",
+  "expect": "action",
+  "id": "hammered-h11"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "Can my previous course count toward PL201 as a prerequisite?",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "must": [
+   "registrar|approved"
+  ],
+  "id": "hammered-h12"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "What should I do if my grade seems wrong?",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "must": [
+   "7"
+  ],
+  "id": "hammered-h13"
+ },
+ {
+  "category": "followup",
+  "question": "what about the final project?",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "How is coursework weighted?"
+   },
+   {
+    "role": "assistant",
+    "content": "Coursework is 40%."
+   }
+  ],
+  "must": [
+   "40"
+  ],
+  "id": "hammered-h14"
+ },
+ {
+  "category": "followup",
+  "question": "does that apply to part-time students too?",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "What is the maximum credit load per term?"
+   },
+   {
+    "role": "assistant",
+    "content": "At most 6 credits per term."
+   }
+  ],
+  "must": [
+   "same|yes"
+  ],
+  "id": "hammered-h15"
+ },
+ {
+  "category": "ambiguity",
+  "question": "how much?",
+  "expect": "clarification",
+  "id": "hammered-h16"
+ },
+ {
+  "category": "ambiguity",
+  "question": "and then?",
+  "expect": "clarification",
+  "id": "hammered-h17"
+ },
+ {
+  "category": "topic_switch",
+  "question": "how do I reset a page that won't load",
+  "expect": "answer",
+  "sources": [
+   "learning-platform.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "How many credits is DA110?"
+   },
+   {
+    "role": "assistant",
+    "content": "3 credits."
+   }
+  ],
+  "must": [
+   "refresh"
+  ],
+  "id": "hammered-h18"
+ },
+ {
+  "category": "count_list",
+  "question": "How many courses are in the certificate and what are they?",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md",
+   "courses.md"
+  ],
+  "must": [
+   "4|four"
+  ],
+  "id": "hammered-h19"
+ },
+ {
+  "category": "count_list",
+  "question": "how many credits can I take per term",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "must": [
+   "6"
+  ],
+  "id": "hammered-h20"
+ },
+ {
+  "category": "unsupported",
+  "question": "Can I get a visa through the university?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "about.md"
+  ],
+  "forbid": [
+   "yes, the university can"
+  ],
+  "id": "hammered-h21"
+ },
+ {
+  "category": "unsupported",
+  "question": "Who is the university president?",
+  "expect": [
+   "abstain"
+  ],
+  "id": "hammered-h22"
+ },
+ {
+  "category": "small_talk",
+  "question": "bye",
+  "expect": "small_talk",
+  "id": "hammered-h23"
+ },
+ {
+  "category": "small_talk",
+  "question": "how can you help me",
+  "expect": "capability",
+  "id": "hammered-h24"
+ }
+]

@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
 from eve_ah.api import create_app
-from eve_ah.config import Settings
+from eve_ah.config import BotConfig, Settings
 from eve_ah.models import EveError, Source
 
 
@@ -35,7 +35,9 @@ class Generator:
 
 
 def test_chat_and_health():
-    with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
+    with TestClient(
+        create_app(Settings(api_key="test", bot=BotConfig(routing="rules")), Store(), Generator())
+    ) as client:
         assert client.get("/health").status_code == 200
         assert client.get("/ready").status_code == 200
         result = client.post("/api/chat", json={"message": "What is the return policy?"})
@@ -51,7 +53,9 @@ def test_chat_and_health():
 
 
 def test_conversation_type_is_additive_to_stable_grounding_contract():
-    with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
+    with TestClient(
+        create_app(Settings(api_key="test", bot=BotConfig(routing="rules")), Store(), Generator())
+    ) as client:
         result = client.post("/api/chat", json={"message": "Can you cancel my order?"})
 
     assert result.status_code == 200
@@ -78,7 +82,11 @@ def test_chat_can_return_contextual_followup_questions():
                 "suggested_questions": [],
             }
 
-    with TestClient(create_app(Settings(api_key="test"), PaymentStore(), Generator())) as client:
+    with TestClient(
+        create_app(
+            Settings(api_key="test", bot=BotConfig(routing="rules")), PaymentStore(), Generator()
+        )
+    ) as client:
         result = client.post(
             "/api/chat", json={"message": "How long does a payment take to process?"}
         )
@@ -93,7 +101,9 @@ def test_chat_can_return_contextual_followup_questions():
 
 
 def test_browser_shell_has_guided_discovery_and_collapsible_evidence():
-    with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
+    with TestClient(
+        create_app(Settings(api_key="test", bot=BotConfig(routing="rules")), Store(), Generator())
+    ) as client:
         page = client.get("/")
         app_js = client.get("/static/app.js")
 
@@ -111,14 +121,18 @@ def test_browser_shell_has_guided_discovery_and_collapsible_evidence():
 
 
 def test_missing_key_unready():
-    with TestClient(create_app(Settings(), Store(), Generator())) as client:
+    with TestClient(
+        create_app(Settings(bot=BotConfig(routing="rules")), Store(), Generator())
+    ) as client:
         assert client.get("/health").status_code == 200
         assert client.get("/ready").status_code == 503
         assert client.post("/api/chat", json={"message": "Hi"}).status_code == 503
 
 
 def test_invalid_input_and_oversized_body():
-    with TestClient(create_app(Settings(api_key="test"), Store(), Generator())) as client:
+    with TestClient(
+        create_app(Settings(api_key="test", bot=BotConfig(routing="rules")), Store(), Generator())
+    ) as client:
         assert client.post("/api/chat", json={"message": " "}).status_code == 422
         assert client.post("/api/chat", json={"message": "x" * 150000}).status_code == 413
         assert (
@@ -134,6 +148,8 @@ def test_failed_index_unready():
         def load(self):
             raise EveError("Run ingestion first.")
 
-    with TestClient(create_app(Settings(api_key="test"), Broken(), Generator())) as client:
+    with TestClient(
+        create_app(Settings(api_key="test", bot=BotConfig(routing="rules")), Broken(), Generator())
+    ) as client:
         assert client.get("/ready").status_code == 503
         assert client.get("/api/info").json()["ready"] is False

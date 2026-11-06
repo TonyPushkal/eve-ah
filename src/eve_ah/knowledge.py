@@ -536,6 +536,32 @@ class Knowledge:
                 scores[index] = float(score)
         return scores
 
+    def expand(self, sources: list[Source]) -> list[Source]:
+        """Add every chunk of the matched files, in order, so counts see the whole file."""
+        names = list(dict.fromkeys(source.name for source in sources))
+        seen = {source.id for source in sources}
+        result = list(sources)
+        remaining = self.settings.bot.context_chars - sum(len(source.text) for source in sources)
+        for name in names:
+            for record in self.records:
+                if record["name"] != name or record["id"] in seen:
+                    continue
+                if len(record["text"]) > remaining:
+                    continue
+                remaining -= len(record["text"])
+                seen.add(record["id"])
+                result.append(
+                    Source(
+                        id=record["id"],
+                        name=name,
+                        page=record["page"],
+                        text=record["text"],
+                        score=0.0,
+                    )
+                )
+        order = {record["id"]: position for position, record in enumerate(self.records)}
+        return sorted(result, key=lambda s: (names.index(s.name), order.get(s.id, 0)))
+
     def search(self, query: str, mode: str | None = None) -> list[Source]:
         if self.index is None:
             raise EveError("Index not loaded; restart after ingestion.", code="index_unavailable")

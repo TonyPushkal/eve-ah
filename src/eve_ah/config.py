@@ -22,7 +22,8 @@ class BotConfig(BaseModel):
     welcome: str = Field(default="Ask a question. Find the source.", max_length=300)
     instructions: str = Field(default="Answer clearly and concisely.", max_length=4000)
     mode: Literal["knowledge", "general"] = "knowledge"
-    min_score: float = Field(default=0.3, ge=-1, le=1)
+    min_score: float = Field(default=0.2, ge=-1, le=1)
+    routing: Literal["model", "rules"] = "model"
     top_k: int = Field(default=4, ge=1, le=20)
     chunk_tokens: int = Field(default=200, ge=16, le=2048)
     chunk_overlap: int = Field(default=32, ge=0)

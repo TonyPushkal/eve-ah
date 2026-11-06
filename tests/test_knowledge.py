@@ -360,3 +360,23 @@ def test_traversal_failure_preserves_index(settings, monkeypatch):
     assert (settings.storage_dir / "active.json").read_bytes() == pointer
     kb.load()
     assert kb.search("returns")[0].name == "facts.txt"
+
+
+def test_expand_adds_remaining_chunks_of_matched_files_in_order(settings):
+    settings.bot.chunk_tokens = 8
+    settings.bot.chunk_overlap = 2
+    (settings.data_dir / "catalog.md").write_text(
+        "# Catalog\n\nAlpha costs five dollars. "
+        + "Filler words repeat here. " * 6
+        + "Omega is last."
+    )
+    (settings.data_dir / "other.md").write_text("Unrelated shipping text.")
+    kb = Knowledge(settings, FakeEmbedder())
+    kb.ingest()
+    kb.load()
+    hit = [s for s in kb.search("alpha costs") if s.name == "catalog.md"][:1]
+    expanded = kb.expand(hit)
+    assert {s.name for s in expanded} == {"catalog.md"}
+    assert len(expanded) > 1
+    assert expanded[0].id == hit[0].id or hit[0].id in {s.id for s in expanded}
+    assert "Omega" in " ".join(s.text for s in expanded)

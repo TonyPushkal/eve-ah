@@ -245,7 +245,8 @@ def _payment_stage_questions(overview: dict) -> list[tuple[str, str]]:
 
 def clarification_response(
     message: str, previous_user_messages: list[str], overview: dict
-) -> tuple[str, list[str]] | None:
+) -> tuple[str, list[str], bool] | None:
+    """Returns the question, suggestions, and whether suggestions are already disambiguation choices."""
     payment_stages = _payment_stage_questions(overview)
     if _is_ambiguous_payment_timing(message) and len(payment_stages) > 1:
         stage_names = [name for name, _ in payment_stages]
@@ -254,6 +255,7 @@ def clarification_response(
             f"Which payment stage do you mean: {choices}? Choose one below so I can answer from "
             "the indexed documents.",
             [question for _, question in payment_stages],
+            True,
         )
     if not _needs_clarification(message, previous_user_messages):
         return None
@@ -265,7 +267,7 @@ def clarification_response(
         if names
         else "Which topic, item, or earlier question do you mean?"
     )
-    return answer, recovery_questions(message, overview)
+    return answer, recovery_questions(message, overview, limit=12), False
 
 
 def _topic_names(overview: dict) -> list[str]:
@@ -371,6 +373,16 @@ def live_data_answer(message: str, overview: dict) -> str:
     return (
         f"I can’t check {_live_data_limit(message)}. I can only use the information provided in "
         f"this workspace, but I can still help with {topics}."
+    )
+
+
+def limit_answer(limit: str, message: str, overview: dict) -> str:
+    """Honest limit for a request the router found unanswerable from documents."""
+    phrase = limit.strip().rstrip(".") or "do that"
+    topics = _topic_help(message, overview)
+    return (
+        f"I can’t {phrase}. I can only use the information provided in this workspace, "
+        f"but I can still help with {topics}."
     )
 
 

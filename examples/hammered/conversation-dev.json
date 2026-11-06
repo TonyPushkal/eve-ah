@@ -1,0 +1,438 @@
+[
+ {
+  "category": "paraphrase",
+  "question": "what do I need to finish to get the certificate",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "must": [
+   "PF101"
+  ],
+  "id": "hammered-d01"
+ },
+ {
+  "category": "paraphrase",
+  "question": "when does signing up for spring close",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md",
+   "calendar-fees.md"
+  ],
+  "must": [
+   "8 January|January 8"
+  ],
+  "id": "hammered-d02"
+ },
+ {
+  "category": "paraphrase",
+  "question": "whats the cost of PL201",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md",
+   "courses.md"
+  ],
+  "must": [
+   "450"
+  ],
+  "id": "hammered-d03"
+ },
+ {
+  "category": "paraphrase",
+  "question": "what score do I need to pass a course",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "must": [
+   "70"
+  ],
+  "id": "hammered-d04"
+ },
+ {
+  "category": "paraphrase",
+  "question": "how much do assignments lose if they are a few hours late",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "must": [
+   "10"
+  ],
+  "id": "hammered-d05"
+ },
+ {
+  "category": "paraphrase",
+  "question": "how big can an upload be",
+  "expect": "answer",
+  "sources": [
+   "learning-platform.md"
+  ],
+  "must": [
+   "25"
+  ],
+  "id": "hammered-d06"
+ },
+ {
+  "category": "paraphrase",
+  "question": "can I watch the class recordings later",
+  "expect": "answer",
+  "sources": [
+   "courses.md"
+  ],
+  "must": [
+   "30"
+  ],
+  "id": "hammered-d07"
+ },
+ {
+  "category": "paraphrase",
+  "question": "how long until my digital certificate shows up",
+  "expect": "answer",
+  "sources": [
+   "certificates-records.md"
+  ],
+  "must": [
+   "10"
+  ],
+  "id": "hammered-d08"
+ },
+ {
+  "category": "paraphrase",
+  "question": "Can I take all four courses in one term?",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "must": [
+   "no|not|cannot"
+  ],
+  "id": "hammered-d09"
+ },
+ {
+  "category": "personal_record",
+  "question": "find my grades",
+  "expect": "live_data",
+  "id": "hammered-d10"
+ },
+ {
+  "category": "personal_record",
+  "question": "can you check on my application",
+  "expect": "live_data",
+  "id": "hammered-d11"
+ },
+ {
+  "category": "personal_record",
+  "question": "did I pass PF101",
+  "expect": "live_data",
+  "id": "hammered-d12"
+ },
+ {
+  "category": "personal_record",
+  "question": "show me my transcript",
+  "expect": "live_data",
+  "id": "hammered-d13"
+ },
+ {
+  "category": "personal_record",
+  "question": "what's my tuition balance",
+  "expect": "live_data",
+  "id": "hammered-d14"
+ },
+ {
+  "category": "personal_record",
+  "question": "are there seats left in DA110 right now",
+  "expect": "live_data",
+  "id": "hammered-d15"
+ },
+ {
+  "category": "action",
+  "question": "enroll me in UX120",
+  "expect": "action",
+  "id": "hammered-d16"
+ },
+ {
+  "category": "action",
+  "question": "please book an appointment with an adviser",
+  "expect": "action",
+  "id": "hammered-d17"
+ },
+ {
+  "category": "action",
+  "question": "waive the PF101 prerequisite for me",
+  "expect": "action",
+  "id": "hammered-d18"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "What happens to my tuition if I drop a course before add/drop closes?",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md"
+  ],
+  "must": [
+   "full|refund"
+  ],
+  "id": "hammered-d19"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "If I fail a course, can I retake it?",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "must": [
+   "once|one"
+  ],
+  "id": "hammered-d20"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "My upload didn't show a confirmation number, what now?",
+  "expect": "answer",
+  "sources": [
+   "learning-platform.md"
+  ],
+  "id": "hammered-d21"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "How do I get accommodations for my exam?",
+  "expect": "answer",
+  "sources": [
+   "student-support.md"
+  ],
+  "id": "hammered-d22"
+ },
+ {
+  "category": "followup",
+  "question": "how much is it?",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md",
+   "courses.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "Tell me about PL201."
+   },
+   {
+    "role": "assistant",
+    "content": "PL201 is a 3-credit Product Lab course."
+   }
+  ],
+  "must": [
+   "450"
+  ],
+  "id": "hammered-d23"
+ },
+ {
+  "category": "followup",
+  "question": "and what are the prerequisites?",
+  "expect": "answer",
+  "sources": [
+   "courses.md",
+   "enrollment.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "When does PL201 meet?"
+   },
+   {
+    "role": "assistant",
+    "content": "Fridays 18:00–21:00."
+   }
+  ],
+  "must": [
+   "PF101"
+  ],
+  "id": "hammered-d24"
+ },
+ {
+  "category": "followup",
+  "question": "how long do I have to accept?",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "What is a wait list?"
+   },
+   {
+    "role": "assistant",
+    "content": "A full course may have a waiting list; students are notified of an open seat."
+   }
+  ],
+  "must": [
+   "48"
+  ],
+  "id": "hammered-d25"
+ },
+ {
+  "category": "ambiguity",
+  "question": "How long?",
+  "expect": "clarification",
+  "id": "hammered-d26"
+ },
+ {
+  "category": "ambiguity",
+  "question": "what about the other one",
+  "expect": "clarification",
+  "id": "hammered-d27"
+ },
+ {
+  "category": "topic_switch",
+  "question": "what are the grade bands",
+  "expect": "answer",
+  "sources": [
+   "grading.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "When does enrollment close?"
+   },
+   {
+    "role": "assistant",
+    "content": "8 January 2027 at 17:00."
+   }
+  ],
+  "must": [
+   "90"
+  ],
+  "id": "hammered-d28"
+ },
+ {
+  "category": "topic_switch",
+  "question": "Is there a student housing option?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "about.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "What is the PF101 tuition?"
+   },
+   {
+    "role": "assistant",
+    "content": "$300."
+   }
+  ],
+  "forbid": [
+   "yes, housing is"
+  ],
+  "id": "hammered-d29"
+ },
+ {
+  "category": "count_list",
+  "question": "How many courses are offered?",
+  "expect": "answer",
+  "sources": [
+   "courses.md"
+  ],
+  "must": [
+   "4|four"
+  ],
+  "id": "hammered-d30"
+ },
+ {
+  "category": "count_list",
+  "question": "list all the courses",
+  "expect": "answer",
+  "sources": [
+   "courses.md"
+  ],
+  "must": [
+   "PF101",
+   "DA110",
+   "UX120",
+   "PL201"
+  ],
+  "id": "hammered-d31"
+ },
+ {
+  "category": "count_list",
+  "question": "How many credits does the certificate need in total?",
+  "expect": "answer",
+  "sources": [
+   "enrollment.md"
+  ],
+  "must": [
+   "12"
+  ],
+  "id": "hammered-d32"
+ },
+ {
+  "category": "count_list",
+  "question": "What are all the important dates this term?",
+  "expect": "answer",
+  "sources": [
+   "calendar-fees.md"
+  ],
+  "must": [
+   "18 January",
+   "22 January|26 February"
+  ],
+  "id": "hammered-d33"
+ },
+ {
+  "category": "unsupported",
+  "question": "Is Hammered University accredited?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "about.md"
+  ],
+  "forbid": [
+   "yes, it is accredited|is accredited by"
+  ],
+  "id": "hammered-d34"
+ },
+ {
+  "category": "unsupported",
+  "question": "Do you offer scholarships?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "calendar-fees.md"
+  ],
+  "forbid": [
+   "yes, we offer"
+  ],
+  "id": "hammered-d35"
+ },
+ {
+  "category": "unsupported",
+  "question": "What's the weather going to be tomorrow?",
+  "expect": [
+   "abstain",
+   "live_data"
+  ],
+  "id": "hammered-d36"
+ },
+ {
+  "category": "small_talk",
+  "question": "thank you so much",
+  "expect": "small_talk",
+  "id": "hammered-d37"
+ },
+ {
+  "category": "small_talk",
+  "question": "what can you tell me about?",
+  "expect": "capability",
+  "id": "hammered-d38"
+ }
+]

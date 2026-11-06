@@ -18,7 +18,7 @@ class Provider:
         if self.owns_client:
             await self.client.aclose()
 
-    async def generate(self, system: str, user: str) -> str:
+    async def generate(self, system: str, user: str, *, json_output: bool = False) -> str:
         s = self.settings
         key = s.api_key.get_secret_value()
         if s.provider == "gemini":
@@ -31,6 +31,8 @@ class Provider:
                 "contents": [{"role": "user", "parts": [{"text": user}]}],
                 "generationConfig": {"maxOutputTokens": s.max_tokens},
             }
+            if json_output:
+                body["generationConfig"]["responseMimeType"] = "application/json"
         else:
             url = "https://api.openai.com/v1/chat/completions"
             headers = {"Authorization": f"Bearer {key}"}
@@ -42,6 +44,8 @@ class Provider:
                 ],
                 "max_completion_tokens": s.max_tokens,
             }
+            if json_output:
+                body["response_format"] = {"type": "json_object"}
         for attempt in range(3):
             try:
                 response = await self.client.post(url, headers=headers, json=body)

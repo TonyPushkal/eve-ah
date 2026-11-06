@@ -16,6 +16,17 @@ The command reports any-source hit rate, all-required-source completeness, requi
 
 For meaningful comparisons, freeze the corpus, model/revision, question set, and machine details. Change one variable at a time: chunk size, overlap, top-k, or threshold. Keep a separate held-out question set when tuning. Add at least 20 answerable and 10 unrelated questions per domain before publishing a quality claim.
 
+## Conversation routing
+
+`conversation-dev.json` and `conversation-holdout.json` in each example directory hold paraphrases, personal-record and action requests, policy questions that mention "my", follow-ups, topic switches, ambiguity, counts and lists, and unsupported questions. Each case has an `expect` outcome (`answer`, `abstain`, `live_data`, `action`, `clarification`, `small_talk`, `capability`), optional expected `sources`, and regex `must`/`forbid` checks on the answer text.
+
+```bash
+eve-ah evaluate-conversations examples/amaze-on/conversation-holdout.json --offline
+eve-ah evaluate-conversations examples/amaze-on/conversation-holdout.json
+```
+
+`--offline` makes no provider calls: it exercises the rule-based fallback and retrieval and treats any retrieved evidence as answerable, so it understates routing quality when `routing: model` is configured. The second form needs a key, checks routing, cited sources, and answer text, flags suggestions the bot would not answer, and reports provider calls and latency per case. Tune only on the dev file; read the held-out file once per change.
+
 ## Generated answers
 
 With your own API key, create a retained review artifact:

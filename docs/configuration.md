@@ -19,7 +19,9 @@ Environment variables override `.env`. The default configuration root is the cur
 
 `bot.yaml` supports `name`, `welcome`, `instructions`, `mode`, `min_score`, `top_k`, `chunk_tokens`, `chunk_overlap`, and `context_chars`; start with `bot.example.yaml`. Unknown YAML fields are rejected. Persona instructions cannot turn citations into proof of factual correctness.
 
-`min_score` is a normalized inner-product/cosine similarity cutoff, **not a confidence probability**. Tune it against both answerable and unanswerable questions for your corpus. The default 0.3 is a starting setting, not a validated universal threshold.
+`min_score` is a normalized inner-product/cosine similarity cutoff, **not a confidence probability**. Tune it against both answerable and unanswerable questions for your corpus. The default 0.2 is a starting setting, not a validated universal threshold. On the bundled demos with all-MiniLM-L6-v2, on-topic short questions scored 0.24–0.5 while unrelated questions peaked near 0.15, so 0.3 discarded valid matches.
+
+`routing` (`model` by default, or `rules`) chooses how each message is classified before retrieval. `model` makes one small structured provider call per message (greetings and exact capability questions skip it) to decide between answering from documents, explaining that personal records or actions are unavailable, asking for clarification, and to rewrite follow-ups into standalone search queries. If that call fails or returns invalid JSON the assistant falls back to the built-in rules, so a provider hiccup never blocks an answer. `rules` makes no routing call and uses phrase matching only. Suggested questions are checked against the index before they are offered, so unanswerable ones are dropped.
 
 `chunk_tokens` must fit the embedding model's actual tokenizer limit. Overlap must be smaller than the chunk size. Model, tokenizer, and chunking fingerprints prevent serving an incompatible index; re-ingest after changing them. Changing identity or retrieval settings requires restarting the server.
 

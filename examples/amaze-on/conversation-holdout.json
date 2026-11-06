@@ -1,0 +1,270 @@
+[
+ {
+  "category": "paraphrase",
+  "question": "how much for the NameTag luggage tag?",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "12"
+  ],
+  "id": "amaze-on-h01"
+ },
+ {
+  "category": "paraphrase",
+  "question": "whats the cutoff time for same-day dispatch",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "must": [
+   "14"
+  ],
+  "id": "amaze-on-h02"
+ },
+ {
+  "category": "paraphrase",
+  "question": "can i get my money back if the engraving is wrong",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "id": "amaze-on-h03"
+ },
+ {
+  "category": "paraphrase",
+  "question": "does the water bottle go in the dishwasher?",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "not|no"
+  ],
+  "id": "amaze-on-h04"
+ },
+ {
+  "category": "paraphrase",
+  "question": "Do you take cash on delivery?",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "must": [
+   "not|no"
+  ],
+  "id": "amaze-on-h05"
+ },
+ {
+  "category": "personal_record",
+  "question": "pull up my recent orders please",
+  "expect": "live_data",
+  "id": "amaze-on-h06"
+ },
+ {
+  "category": "personal_record",
+  "question": "is my parcel out for delivery",
+  "expect": "live_data",
+  "id": "amaze-on-h07"
+ },
+ {
+  "category": "personal_record",
+  "question": "did my payment go through",
+  "expect": "live_data",
+  "id": "amaze-on-h08"
+ },
+ {
+  "category": "personal_record",
+  "question": "I need to know when my stuff will arrive",
+  "expect": "live_data",
+  "id": "amaze-on-h09"
+ },
+ {
+  "category": "action",
+  "question": "can you refund me for the broken cup",
+  "expect": "action",
+  "id": "amaze-on-h10"
+ },
+ {
+  "category": "action",
+  "question": "could you email me a copy of my receipt",
+  "expect": "action",
+  "id": "amaze-on-h11"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "If my TrailPack arrives damaged, who pays return postage?",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "must": [
+   "amaze|we|store"
+  ],
+  "id": "amaze-on-h12"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "Can I change my shipping address once my order has been dispatched?",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "must": [
+   "no|cannot|not"
+  ],
+  "id": "amaze-on-h13"
+ },
+ {
+  "category": "followup",
+  "question": "what about the bag?",
+  "expect": "answer",
+  "sources": [
+   "warranty.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "What warranty does CloudCup have?"
+   },
+   {
+    "role": "assistant",
+    "content": "Six months against manufacturing defects."
+   }
+  ],
+  "must": [
+   "6|six"
+  ],
+  "id": "amaze-on-h14"
+ },
+ {
+  "category": "followup",
+  "question": "is that free?",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "How fast is express delivery?"
+   },
+   {
+    "role": "assistant",
+    "content": "Express takes 1–2 business days after dispatch."
+   }
+  ],
+  "must": [
+   "no|not|12"
+  ],
+  "id": "amaze-on-h15"
+ },
+ {
+  "category": "ambiguity",
+  "question": "how much does it cost",
+  "expect": "clarification",
+  "id": "amaze-on-h16"
+ },
+ {
+  "category": "ambiguity",
+  "question": "and when?",
+  "expect": "clarification",
+  "id": "amaze-on-h17"
+ },
+ {
+  "category": "topic_switch",
+  "question": "what cards do you accept",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "How long does the TrailPack warranty last?"
+   },
+   {
+    "role": "assistant",
+    "content": "Six months."
+   }
+  ],
+  "must": [
+   "visa"
+  ],
+  "id": "amaze-on-h18"
+ },
+ {
+  "category": "count_list",
+  "question": "How many items are in your catalog?",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "4|four"
+  ],
+  "id": "amaze-on-h19"
+ },
+ {
+  "category": "count_list",
+  "question": "what are all the shipping options",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "must": [
+   "standard",
+   "express"
+  ],
+  "id": "amaze-on-h20"
+ },
+ {
+  "category": "count_list",
+  "question": "How many days is the standard return window and how many for damaged items?",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "must": [
+   "30",
+   "7"
+  ],
+  "id": "amaze-on-h21"
+ },
+ {
+  "category": "unsupported",
+  "question": "Do you price match other stores?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "about.md"
+  ],
+  "forbid": [
+   "yes, we price"
+  ],
+  "id": "amaze-on-h22"
+ },
+ {
+  "category": "unsupported",
+  "question": "What's the capital of Australia?",
+  "expect": [
+   "abstain"
+  ],
+  "id": "amaze-on-h23"
+ },
+ {
+  "category": "small_talk",
+  "question": "ok bye",
+  "expect": "small_talk",
+  "id": "amaze-on-h24"
+ },
+ {
+  "category": "small_talk",
+  "question": "what do you know about?",
+  "expect": "capability",
+  "id": "amaze-on-h25"
+ }
+]

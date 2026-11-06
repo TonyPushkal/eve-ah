@@ -1,0 +1,442 @@
+[
+ {
+  "category": "paraphrase",
+  "question": "whats the price of the cloudcup",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "24"
+  ],
+  "id": "amaze-on-d01"
+ },
+ {
+  "category": "paraphrase",
+  "question": "do i get free shipping if i spend 60 bucks",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "must": [
+   "free"
+  ],
+  "id": "amaze-on-d02"
+ },
+ {
+  "category": "paraphrase",
+  "question": "how many days do I have to send something back",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "must": [
+   "30"
+  ],
+  "id": "amaze-on-d03"
+ },
+ {
+  "category": "paraphrase",
+  "question": "will the lamp work without being plugged in",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "no|not|must"
+  ],
+  "id": "amaze-on-d04"
+ },
+ {
+  "category": "paraphrase",
+  "question": "what payment options do you take",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "must": [
+   "visa"
+  ],
+  "id": "amaze-on-d05"
+ },
+ {
+  "category": "paraphrase",
+  "question": "how soon does express arrive",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "must": [
+   "1.{0,3}2"
+  ],
+  "id": "amaze-on-d06"
+ },
+ {
+  "category": "paraphrase",
+  "question": "is the bag ok in a washing machine",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "not|do not|no"
+  ],
+  "id": "amaze-on-d07"
+ },
+ {
+  "category": "paraphrase",
+  "question": "what's the warranty on the lamp",
+  "expect": "answer",
+  "sources": [
+   "warranty.md"
+  ],
+  "must": [
+   "12"
+  ],
+  "id": "amaze-on-d08"
+ },
+ {
+  "category": "paraphrase",
+  "question": "can I use two promo codes on one order",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "must": [
+   "one"
+  ],
+  "id": "amaze-on-d09"
+ },
+ {
+  "category": "paraphrase",
+  "question": "once a refund is approved how long till I get the money",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "must": [
+   "5"
+  ],
+  "id": "amaze-on-d10"
+ },
+ {
+  "category": "personal_record",
+  "question": "find my orders",
+  "expect": "live_data",
+  "id": "amaze-on-d11"
+ },
+ {
+  "category": "personal_record",
+  "question": "can you check on my order",
+  "expect": "live_data",
+  "id": "amaze-on-d12"
+ },
+ {
+  "category": "personal_record",
+  "question": "where is my package right now",
+  "expect": "live_data",
+  "id": "amaze-on-d13"
+ },
+ {
+  "category": "personal_record",
+  "question": "has my order shipped yet",
+  "expect": "live_data",
+  "id": "amaze-on-d14"
+ },
+ {
+  "category": "personal_record",
+  "question": "show me my purchase history",
+  "expect": "live_data",
+  "id": "amaze-on-d15"
+ },
+ {
+  "category": "personal_record",
+  "question": "what's the status of my refund",
+  "expect": "live_data",
+  "id": "amaze-on-d16"
+ },
+ {
+  "category": "personal_record",
+  "question": "look up my account details",
+  "expect": "live_data",
+  "id": "amaze-on-d17"
+ },
+ {
+  "category": "action",
+  "question": "cancel my order",
+  "expect": "action",
+  "id": "amaze-on-d18"
+ },
+ {
+  "category": "action",
+  "question": "please change my delivery address to 12 Elm Street",
+  "expect": "action",
+  "id": "amaze-on-d19"
+ },
+ {
+  "category": "action",
+  "question": "I want to return the lamp I bought, can you set that up for me",
+  "expect": "action",
+  "id": "amaze-on-d20"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "How do I cancel my order before it ships?",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "id": "amaze-on-d21"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "What happens to my address if I try to change it after dispatch?",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "id": "amaze-on-d22"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "My package hasn't arrived, what should I do?",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "id": "amaze-on-d23"
+ },
+ {
+  "category": "policy_with_my",
+  "question": "Can I return my order if I just changed my mind?",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "must": [
+   "30"
+  ],
+  "id": "amaze-on-d24"
+ },
+ {
+  "category": "followup",
+  "question": "does it have a battery?",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "What is the price of GlowDesk?"
+   },
+   {
+    "role": "assistant",
+    "content": "GlowDesk costs $48."
+   }
+  ],
+  "must": [
+   "no|not"
+  ],
+  "id": "amaze-on-d25"
+ },
+ {
+  "category": "followup",
+  "question": "and express?",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "How much is standard shipping?"
+   },
+   {
+    "role": "assistant",
+    "content": "Standard shipping costs $5 below a $50 subtotal and is free at $50 or more."
+   }
+  ],
+  "must": [
+   "12"
+  ],
+  "id": "amaze-on-d26"
+ },
+ {
+  "category": "followup",
+  "question": "how long do I have to do that?",
+  "expect": "answer",
+  "sources": [
+   "returns.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "Can I return a CloudCup if I change my mind?"
+   },
+   {
+    "role": "assistant",
+    "content": "Yes, unused non-personalized products can be returned."
+   }
+  ],
+  "must": [
+   "30"
+  ],
+  "id": "amaze-on-d27"
+ },
+ {
+  "category": "ambiguity",
+  "question": "How long?",
+  "expect": "clarification",
+  "id": "amaze-on-d28"
+ },
+ {
+  "category": "ambiguity",
+  "question": "what about that one",
+  "expect": "clarification",
+  "id": "amaze-on-d29"
+ },
+ {
+  "category": "topic_switch",
+  "question": "how long does standard delivery take",
+  "expect": "answer",
+  "sources": [
+   "shipping.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "Does the GlowDesk warranty cover drops?"
+   },
+   {
+    "role": "assistant",
+    "content": "No, accidental drops are excluded."
+   }
+  ],
+  "must": [
+   "3.{0,3}5"
+  ],
+  "id": "amaze-on-d30"
+ },
+ {
+  "category": "topic_switch",
+  "question": "What is Amaze-on?",
+  "expect": "answer",
+  "sources": [
+   "about.md"
+  ],
+  "history": [
+   {
+    "role": "user",
+    "content": "How long is the CloudCup warranty?"
+   },
+   {
+    "role": "assistant",
+    "content": "Six months."
+   }
+  ],
+  "id": "amaze-on-d31"
+ },
+ {
+  "category": "count_list",
+  "question": "How many products are listed?",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "4|four"
+  ],
+  "id": "amaze-on-d32"
+ },
+ {
+  "category": "count_list",
+  "question": "how many products do you sell",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "4|four"
+  ],
+  "id": "amaze-on-d33"
+ },
+ {
+  "category": "count_list",
+  "question": "List all the products and their prices",
+  "expect": "answer",
+  "sources": [
+   "products.md"
+  ],
+  "must": [
+   "cloudcup",
+   "glowdesk",
+   "trailpack",
+   "nametag"
+  ],
+  "id": "amaze-on-d34"
+ },
+ {
+  "category": "count_list",
+  "question": "How many payment methods do you accept?",
+  "expect": "answer",
+  "sources": [
+   "orders-payments.md"
+  ],
+  "must": [
+   "3|three"
+  ],
+  "id": "amaze-on-d35"
+ },
+ {
+  "category": "unsupported",
+  "question": "Do you ship internationally?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "about.md"
+  ],
+  "forbid": [
+   "yes, we ship|we do ship internationally"
+  ],
+  "id": "amaze-on-d36"
+ },
+ {
+  "category": "unsupported",
+  "question": "Do you offer student discounts?",
+  "expect": [
+   "answer",
+   "abstain"
+  ],
+  "sources": [
+   "about.md"
+  ],
+  "forbid": [
+   "yes, we offer|students get"
+  ],
+  "id": "amaze-on-d37"
+ },
+ {
+  "category": "unsupported",
+  "question": "Who won the football world cup?",
+  "expect": [
+   "abstain",
+   "live_data"
+  ],
+  "id": "amaze-on-d38"
+ },
+ {
+  "category": "small_talk",
+  "question": "thanks!",
+  "expect": "small_talk",
+  "id": "amaze-on-d39"
+ },
+ {
+  "category": "small_talk",
+  "question": "hey, what can you help me with?",
+  "expect": "capability",
+  "id": "amaze-on-d40"
+ }
+]

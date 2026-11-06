@@ -197,3 +197,131 @@ async def evaluate_answers(chat, path: Path) -> dict:
         "accuracy_claim": "Human review required; structural checks do not establish accuracy.",
         "results": details,
     }
+
+
+class _CountingProvider:
+    """Wraps a provider to count calls; offline mode cites the first source without a model."""
+
+    def __init__(self, provider, offline: bool):
+        self.provider, self.offline, self.calls = provider, offline, 0
+
+    async def generate(self, system: str, user: str, **options) -> str:
+        self.calls += 1
+        if self.offline:
+            return "[s1]" if "documents" in user else "{}"
+        return await self.provider.generate(system, user, **options)
+
+
+def _outcome(response) -> str:
+    if response.response_type == "out_of_scope" or response.grounding == "insufficient":
+        return "abstain"
+    if response.response_type == "answer":
+        return "answer" if response.grounding == "documents" else "general"
+    return response.response_type
+
+
+async def evaluate_conversations(settings, knowledge, provider, path: Path, *, offline=False):
+    """Route-level pass rates per category. Text checks run only with a real provider."""
+    import re
+
+    from eve_ah.chat import ChatService
+
+    cases = json.loads(path.read_text())
+    counting = _CountingProvider(provider, offline)
+    retrieved: list[str] = []
+    original_search = knowledge.search
+
+    def recording_search(query, *args, **kwargs):
+        sources = original_search(query, *args, **kwargs)
+        retrieved[:] = [source.name for source in sources]
+        return sources
+
+    knowledge.search = recording_search
+    service = ChatService(settings, knowledge, counting)
+    categories: dict[str, dict[str, int]] = {}
+    details = []
+    try:
+        for case in cases:
+            retrieved.clear()
+            counting.calls = 0
+            started = time.perf_counter()
+            try:
+                response = await service.answer(
+                    ChatRequest(message=case["question"], history=case.get("history", []))
+                )
+            except EveError as error:
+                details.append(
+                    {"id": case["id"], "question": case["question"], "error": error.code}
+                )
+                categories.setdefault(case["category"], {"cases": 0, "passed": 0})["cases"] += 1
+                continue
+            elapsed = (time.perf_counter() - started) * 1000
+            expect = case["expect"] if isinstance(case["expect"], list) else [case["expect"]]
+            outcome = _outcome(response)
+            reasons = []
+            if outcome not in expect:
+                reasons.append(f"outcome={outcome}")
+            if outcome == "answer" and case.get("sources") and not offline:
+                cited = {source.name for source in response.sources}
+                if not cited.intersection(case["sources"]):
+                    reasons.append("cited_wrong_source")
+            if outcome == "answer" and case.get("sources"):
+                if not set(retrieved).intersection(case["sources"]):
+                    reasons.append("retrieval_miss")
+            if outcome == "answer" and not offline:
+                for pattern in case.get("must", []):
+                    if not re.search(pattern, response.answer, re.I):
+                        reasons.append(f"missing:{pattern}")
+                for pattern in case.get("forbid", []):
+                    if re.search(pattern, response.answer, re.I):
+                        reasons.append(f"forbidden:{pattern}")
+            bad_suggestions = _bad_suggestions(knowledge, response.suggested_questions)
+            if bad_suggestions:
+                reasons.append("unanswerable_suggestion")
+            stats = categories.setdefault(case["category"], {"cases": 0, "passed": 0})
+            stats["cases"] += 1
+            stats["passed"] += int(not reasons)
+            details.append(
+                {
+                    "id": case["id"],
+                    "category": case["category"],
+                    "question": case["question"],
+                    "passed": not reasons,
+                    "reasons": reasons,
+                    "outcome": outcome,
+                    "retrieved": sorted(set(retrieved)),
+                    "provider_calls": counting.calls,
+                    "latency_ms": round(elapsed, 1),
+                    "suggested_questions": response.suggested_questions,
+                    "answer": response.answer if not offline else None,
+                }
+            )
+    finally:
+        knowledge.search = original_search
+    total = sum(stats["cases"] for stats in categories.values())
+    passed = sum(stats["passed"] for stats in categories.values())
+    return {
+        "kind": "conversation_routing" if offline else "conversation_end_to_end",
+        "cases": total,
+        "passed": passed,
+        "pass_rate": passed / total if total else None,
+        "categories": categories,
+        "avg_provider_calls": round(
+            sum(d.get("provider_calls", 0) for d in details) / max(1, len(details)), 2
+        ),
+        "results": details,
+    }
+
+
+def _bad_suggestions(knowledge, suggestions: list[str]) -> list[str]:
+    """A suggestion is unhelpful when the bot would not answer it from documents."""
+    from eve_ah.conversation import classify_intent
+
+    bad = []
+    for question in suggestions:
+        intent = classify_intent(question)
+        if intent == "capability":
+            continue
+        if intent != "factual" or not knowledge.search(question):
+            bad.append(question)
+    return bad

@@ -7,7 +7,7 @@ instructions: >-
   When a document says information is unavailable, explain that limit.
   For multi-part questions, distinguish supported facts from unknown details.
 mode: knowledge
-min_score: 0.3
+min_score: 0.2
 top_k: 4
 chunk_tokens: 200
 chunk_overlap: 32
@@ -43,4 +43,4 @@ suggested_questions:
   - Can I return a personalized item if it arrives damaged?
   - Does the GlowDesk warranty cover liquid damage?
   - How do I troubleshoot a GlowDesk that will not turn on?
-  - Can you check where my order is right now?
+  - What should I do if my order has not arrived?
