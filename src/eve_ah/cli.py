@@ -37,6 +37,9 @@ def main():
     )
     conversations.add_argument("dataset", type=Path)
     conversations.add_argument(
+        "--delay", type=float, default=0.0, help="Seconds to pause between cases (rate limits)"
+    )
+    conversations.add_argument(
         "--offline", action="store_true", help="No provider calls: routing and retrieval only"
     )
     args = parser.parse_args()
@@ -97,7 +100,7 @@ async def _evaluate_conversations(settings, knowledge, args):
     provider = None if args.offline else Provider(settings)
     try:
         return await evaluate_conversations(
-            settings, knowledge, provider, args.dataset, offline=args.offline
+            settings, knowledge, provider, args.dataset, offline=args.offline, delay=args.delay
         )
     finally:
         if provider:

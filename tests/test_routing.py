@@ -215,3 +215,20 @@ def test_conversation_evaluation_reports_categories_and_bad_suggestions(tmp_path
     assert report["cases"] == 2
     assert report["categories"]["paraphrase"] == {"cases": 1, "passed": 1}
     assert report["pass_rate"] == 1.0
+
+
+def test_grouped_citations_are_split_and_each_id_validated():
+    class Two(Store):
+        def search(self, query):
+            return [
+                Source(id="c-1", name="a.md", text="A."),
+                Source(id="c-2", name="b.md", text="B."),
+            ]
+
+    ok = Router({"route": "answer", "query": "q"}, answer="Both apply [s1, s2].")
+    result = run("q?", ok, Two())
+    assert result.grounding == "documents"
+    assert result.answer == "Both apply [c-1][c-2]."
+    assert [s.id for s in result.sources] == ["c-1", "c-2"]
+    bad = Router({"route": "answer", "query": "q"}, answer="Both apply [s1, s9].")
+    assert run("q?", bad, Two()).grounding == "insufficient"

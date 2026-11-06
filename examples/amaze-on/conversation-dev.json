@@ -76,7 +76,8 @@
   "question": "is the bag ok in a washing machine",
   "expect": "answer",
   "sources": [
-   "products.md"
+   "products.md",
+   "product-care.md"
   ],
   "must": [
    "not|do not|no"

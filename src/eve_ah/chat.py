@@ -184,6 +184,12 @@ class ChatService:
                 answer="General knowledge — not verified against your documents.\n\n" + answer,
                 grounding="general",
             )
+        # A bracket may group IDs, e.g. [s1, s2]; each ID is validated on its own.
+        answer = re.sub(
+            r"\[([^\[\]\n]+)\]",
+            lambda m: "".join(f"[{part}]" for part in re.split(r"\s*[,;]\s*", m.group(1).strip())),
+            answer,
+        )
         citations = re.findall(r"\[([^\[\]\n]+)\]", answer)
         if (
             "INSUFFICIENT_EVIDENCE" in answer

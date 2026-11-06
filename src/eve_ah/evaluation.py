@@ -6,6 +6,8 @@ import statistics
 import time
 from pathlib import Path
 
+import anyio
+
 from eve_ah.models import ChatRequest, EveError
 
 _DETERMINISTIC_CATEGORIES = frozenset({"action", "live_data", "out_of_scope", "small_talk"})
@@ -220,7 +222,9 @@ def _outcome(response) -> str:
     return response.response_type
 
 
-async def evaluate_conversations(settings, knowledge, provider, path: Path, *, offline=False):
+async def evaluate_conversations(
+    settings, knowledge, provider, path: Path, *, offline=False, delay=0.0
+):
     """Route-level pass rates per category. Text checks run only with a real provider."""
     import re
 
@@ -242,6 +246,8 @@ async def evaluate_conversations(settings, knowledge, provider, path: Path, *, o
     details = []
     try:
         for case in cases:
+            if delay and not offline:
+                await anyio.sleep(delay)
             retrieved.clear()
             counting.calls = 0
             started = time.perf_counter()
